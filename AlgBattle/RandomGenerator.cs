@@ -8,7 +8,7 @@ namespace AlgBattle
     {
         public static Random Rnd { get; set; } = new Random();
 
-        public static void ShuffleList<T>(IList<T> toShuffle)
+        public static void Shuffle<T>(IList<T> toShuffle)
         {
             for (int i = toShuffle.Count - 1; i >= 0; --i)
             {
@@ -17,7 +17,7 @@ namespace AlgBattle
             }
         }
 
-        public static void ShuffleArray<T>(T[] toShuffle)
+        public static void Shuffle<T>(T[] toShuffle)
         {
             for (int i = toShuffle.Length - 1; i >= 0; --i)
             {

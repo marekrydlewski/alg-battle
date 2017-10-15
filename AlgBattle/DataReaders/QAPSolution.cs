@@ -8,6 +8,6 @@ namespace AlgBattle.DataReaders
     {
         public int Size { get; set; }
         public int Score { get; set; }
-        public List<int> OptimalSolution { get; set; }
+        public List<int> Solution { get; set; }
     }
 }

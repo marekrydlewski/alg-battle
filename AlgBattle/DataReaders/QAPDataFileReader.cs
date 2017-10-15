@@ -63,7 +63,7 @@ namespace AlgBattle.DataReaders
                     int score = splitted[1];
                     var solution = splitted.Skip(2).ToList();
 
-                    return new QAPSolution { Size = matrixSize, OptimalSolution = solution, Score = score };
+                    return new QAPSolution { Size = matrixSize, Solution = solution, Score = score };
                 }
             }
             catch (Exception e)
