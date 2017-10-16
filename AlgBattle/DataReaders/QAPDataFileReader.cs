@@ -73,5 +73,18 @@ namespace AlgBattle.DataReaders
             }
             return null;
         }
+
+        public IEnumerable<QAPEnsemble> LoadDirectory(string dirPath)
+        {
+            var dataFiles = Directory.GetFiles(dirPath, "*.dat");
+            foreach (var file in dataFiles)
+            {
+                var solutionFile = file.Remove(file.Length - 4) + ".sln";
+                var data = ReadData($@"{file}");
+                var solution = ReadSolution($@"{solutionFile}");
+                var ensemble = new QAPEnsemble {Data = data, Solution = solution};
+                yield return ensemble;
+            }
+        }
     }
 }
