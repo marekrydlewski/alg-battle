@@ -12,7 +12,7 @@ namespace AlgBattle
             Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var qapDataReader = new QAPDataFileReader();
+            var qapDataReader = new QapDataFileReader();
             var data = qapDataReader.ReadData(@"Data/BaseData/bur26a.dat");
             var solution = qapDataReader.ReadSolution(@"Data/BaseData/bur26a.sln");
             //caution: some data files have got only instances without solutions
