@@ -6,9 +6,9 @@ namespace AlgBattle
 {
     public class RandomGenerator
     {
-        public static Random Rnd { get; set; } = new Random();
+        public Random Rnd { get; set; } = new Random();
 
-        public static void Shuffle<T>(IList<T> toShuffle)
+        public void Shuffle<T>(IList<T> toShuffle)
         {
             for (int i = toShuffle.Count - 1; i >= 0; --i)
             {
@@ -17,7 +17,7 @@ namespace AlgBattle
             }
         }
 
-        public static void Shuffle<T>(T[] toShuffle)
+        public void Shuffle<T>(T[] toShuffle)
         {
             for (int i = toShuffle.Length - 1; i >= 0; --i)
             {
