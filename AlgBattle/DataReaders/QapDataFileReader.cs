@@ -30,12 +30,12 @@ namespace AlgBattle.DataReaders
 
                     for (int i = 0; i < matrixSize; ++i)
                     {
-                        qapDataFlow[i] = chunked[i].ToArray();
+                        qapDataDistance[i] = chunked[i].ToArray();
                     }
 
                     for (int i = matrixSize; i < 2 * matrixSize; ++i)
                     {
-                        qapDataDistance[i - matrixSize] = chunked[i].ToArray();
+                        qapDataFlow[i - matrixSize] = chunked[i].ToArray();
                     }
 
                     return new QapData { Distances = qapDataDistance, Flows = qapDataFlow, Size = qapDataFlow.Count() };
