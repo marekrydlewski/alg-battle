@@ -16,7 +16,7 @@ namespace AlgBattle.Benchmarks
             int fitness = 0;
             for (int i = 0; i < sol.Count(); ++i)
             {
-                for (int j = i; j < sol.Count(); ++j)
+                for (int j = i + 1; j < sol.Count(); ++j)
                 {
                     int xi = sol[i];
                     int xj = sol[j];

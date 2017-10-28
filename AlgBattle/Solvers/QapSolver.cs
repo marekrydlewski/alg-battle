@@ -95,13 +95,4 @@ namespace AlgBattle.Solvers
             return flatten;
         }
     }
-
-    internal class CostData
-    {
-        public int Cost { get; set; }
-        public int FlowX { get; set; }
-        public int FlowY { get; set; }
-        public int DistanceX { get; set; }
-        public int DistanceY { get; set; }
-    }
 }
