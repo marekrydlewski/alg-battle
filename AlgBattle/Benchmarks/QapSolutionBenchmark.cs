@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace AlgBattle.Benchmarks
 {
@@ -23,6 +24,24 @@ namespace AlgBattle.Benchmarks
                 }
             }
             return fitness;
+        }
+
+        public int RateSolution(int[] sol, QapData data, int currentCost, int swapX, int swapY)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int RateInsert(int[] sol, QapData data, int facility, int location)
+        {
+            int cost = 0;
+            for (int i = 0; i < sol.Length; ++i)
+            {
+                if (sol[i] != -1)
+                {
+                    cost += data.Distances[i][location] * data.Flows[sol[i]][facility];
+                }
+            }
+            return cost;
         }
     }
 }

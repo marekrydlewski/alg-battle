@@ -24,8 +24,13 @@ namespace AlgBattle
                 var j = Rnd.Next(0, i);
                 T temp = toShuffle[i];
                 toShuffle[i] = toShuffle[j];
-                toShuffle[i] = temp;
+                toShuffle[j] = temp;
             }
+        }
+
+        public T RandomElement<T>(IList<T> elems)
+        {
+            return elems[Rnd.Next(0, elems.Count)];
         }
     }
 }
