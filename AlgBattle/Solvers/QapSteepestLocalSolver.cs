@@ -5,9 +5,9 @@ using AlgBattle.DataReaders;
 
 namespace AlgBattle.Solvers
 {
-    public class QapGreedyLocalSolver: QapSolver
+    public class QapSteepestLocalSolver : QapSolver
     {
-        public QapGreedyLocalSolver(QapData data) : base(data)
+        public QapSteepestLocalSolver(QapData data) : base(data)
         {
         }
 

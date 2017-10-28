@@ -5,15 +5,15 @@ using AlgBattle.DataReaders;
 
 namespace AlgBattle.Solvers
 {
-    public class QapGreedyLocalSolver: QapSolver
+    public class QapRandomSolver : QapSolver
     {
-        public QapGreedyLocalSolver(QapData data) : base(data)
+        public QapRandomSolver(QapData data) : base(data)
         {
         }
 
         public override int[] GetSolution()
         {
-            throw new NotImplementedException();
+            return this.GetRandomInitSolution();
         }
     }
 }
