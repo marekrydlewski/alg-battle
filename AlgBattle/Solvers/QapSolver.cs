@@ -11,9 +11,7 @@ namespace AlgBattle.Solvers
     {
         public QapData Data { get; set; }
 
-        public RandomGenerator Rnd { get; set; } = new RandomGenerator();
-
-        public QapSolutionBenchmark SolutionBenchmark { get; set; } = new QapSolutionBenchmark();
+        public RandomGenerator Rnd { get; set; } = new RandomGenerator();     
 
         public QapSolver(QapData data)
         {
@@ -28,6 +26,16 @@ namespace AlgBattle.Solvers
             Rnd.Shuffle(init);
             return init;
         }
+
+        public List<int>GetList(int[] array)
+        {
+            List<int> list = new List<int>();
+            foreach(int elem in array)
+            {
+                list.Add(elem);
+            }
+            return list;            
+        }        
 
         public int[] GetGreedyInitSolution()
         {

@@ -12,7 +12,7 @@ namespace AlgBattle.Solvers
         }
 
         public override int[] GetSolution()
-        {
+        {            
             return this.GetRandomInitSolution();
         }
     }

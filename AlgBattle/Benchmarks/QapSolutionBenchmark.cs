@@ -18,6 +18,7 @@ namespace AlgBattle.Benchmarks
         public QapSolutionBenchmark(QapData data, QapSolution solution)
         {
             ActualBestSolution = solution;
+            ActualBestSolution.Score = RateSolution();
             Data = data;
             CalcDeltaTable();
         }
@@ -55,6 +56,17 @@ namespace AlgBattle.Benchmarks
             }
         }
 
+        public bool CheckIfSolutionChangeIsBetter(int swapX, int swapY)
+        {
+            if (DeltaTable[swapX, swapY]>0) {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public int RateSolutionChange(int swapX, int swapY)
         {
             return ActualBestSolution.Score + DeltaTable[swapX, swapY];
@@ -73,7 +85,7 @@ namespace AlgBattle.Benchmarks
             return cost;
         }
 
-        private int RateSolution()
+        public int RateSolution()
         {
             //indexes are locations, values means facilites
             //distances of locations, flows of facilites
