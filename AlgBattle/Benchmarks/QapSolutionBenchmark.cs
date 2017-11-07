@@ -14,6 +14,8 @@ namespace AlgBattle.Benchmarks
         public QapData Data { get; set; }
 
         public QapSolution ActualBestSolution { get; set; }
+        
+        public int SwapCounter { get; set; }
 
         public QapSolutionBenchmark(QapData data, QapSolution solution)
         {
@@ -21,10 +23,12 @@ namespace AlgBattle.Benchmarks
             ActualBestSolution.Score = RateSolution();
             Data = data;
             CalcDeltaTable();
+            SwapCounter = 0;
         }
 
         public void ChangeSolution(int p, int q)
         {
+            SwapCounter++;
             int piP = ActualBestSolution.Solution[p];
             int piQ = ActualBestSolution.Solution[q];
 

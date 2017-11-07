@@ -14,10 +14,12 @@ namespace AlgBattle.Solvers
         }
 
         public override int[] GetSolution()
-        {            
-            QapSolution solution = new QapSolution();
-            solution.Size = Data.Distances.Length;
-            solution.Solution = this.GetList(this.GetRandomInitSolution());            
+        {
+            QapSolution solution = new QapSolution
+            {
+                Size = Data.Distances.Length,
+                Solution = this.GetList(this.GetRandomInitSolution())
+            };
             QapSolutionBenchmark benchmark = new QapSolutionBenchmark(Data, solution);
             bool isLocalMinimum = false;
             while (!isLocalMinimum)
