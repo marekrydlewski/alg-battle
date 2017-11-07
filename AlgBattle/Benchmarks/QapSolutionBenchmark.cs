@@ -33,7 +33,7 @@ namespace AlgBattle.Benchmarks
 
             int tableSize = Data.Distances.Count();
             for (int i = 0; i < tableSize; i++){
-                int piI = ActualBestSolution.Solution[j];
+                int piI = ActualBestSolution.Solution[i];
                 for (int j = 0; j < tableSize; j++)
                 {
                     if (i!=q && i!=p && j!=p && j!= q)
@@ -46,10 +46,13 @@ namespace AlgBattle.Benchmarks
                             (Data.Distances[i][p] - Data.Distances[j][p] + Data.Distances[j][q] - Data.Distances[i][q])*
                             (Data.Flows[piJ][piP] - Data.Flows[piI][piP] + Data.Flows[piI][piQ] - Data.Flows[piJ][piQ]);
                     }
-                    //todo calculating new delat values containing p or q
+                    if ((i == p && j != q)||(i != p && j == q)||(i == q && j != p)|| (i != q && j == p)||(i==q && j==p))
+                    {
+                        int piJ = ActualBestSolution.Solution[j];
+                        CalcDelta(tableSize, i, j, piJ, piI);
+                    }
                 }
             }
-
         }
 
         public int RateSolutionChange(int swapX, int swapY)
@@ -88,6 +91,23 @@ namespace AlgBattle.Benchmarks
             return fitness;
         }
 
+        private void CalcDelta(int tableSize, int i, int j, int piJ, int piI)
+        {
+            int partSum = 0;
+            for (int g = 0; g < tableSize; g++)
+            {
+                if (g == i || g == j) continue;
+                int piG = ActualBestSolution.Solution[g];
+                partSum +=
+                    (Data.Distances[g][i] - Data.Distances[g][j]) * (Data.Flows[piG][piJ] - Data.Flows[piG][piI]) +
+                    (Data.Distances[i][g] - Data.Distances[j][g]) * (Data.Flows[piJ][piG] - Data.Flows[piI][piG]);
+            }
+            DeltaTable[i, j] =
+                (Data.Distances[i][i] - Data.Distances[j][j]) * (Data.Flows[piJ][piJ] - Data.Flows[piI][piI]) +
+                (Data.Distances[i][j] - Data.Distances[j][i]) * (Data.Flows[piJ][piI] - Data.Flows[piI][piJ]) +
+                partSum;
+        }
+
         private void CalcDeltaTable()
         {
             int tableSize = Data.Distances.Count();
@@ -98,19 +118,7 @@ namespace AlgBattle.Benchmarks
                 for (int j = 0; j < tableSize; j++)
                 {
                     int piJ = ActualBestSolution.Solution[j];
-                    int partSum = 0;
-                    for (int g = 0; g < tableSize; g++)
-                    {
-                        if (g == i || g == j) continue;
-                        int piG = ActualBestSolution.Solution[g];
-                        partSum +=
-                            (Data.Distances[g][i] - Data.Distances[g][j]) * (Data.Flows[piG][piJ] - Data.Flows[piG][piI]) +
-                            (Data.Distances[i][g] - Data.Distances[j][g]) * (Data.Flows[piJ][piG] - Data.Flows[piI][piG]);
-                    }
-                    DeltaTable[i, j] = 
-                        (Data.Distances[i][i] - Data.Distances[j][j]) * (Data.Flows[piJ][piJ] - Data.Flows[piI][piI]) +
-                        (Data.Distances[i][j] - Data.Distances[j][i]) * (Data.Flows[piJ][piI] - Data.Flows[piI][piJ]) + 
-                        partSum;
+                    CalcDelta(tableSize, i, j, piJ, piI);
                 }
             }
         }
