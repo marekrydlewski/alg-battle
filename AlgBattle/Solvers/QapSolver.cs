@@ -11,7 +11,9 @@ namespace AlgBattle.Solvers
     {
         public QapData Data { get; set; }
 
-        public RandomGenerator Rnd { get; set; } = new RandomGenerator();     
+        public RandomGenerator Rnd { get; set; } = new RandomGenerator();
+
+        public QapSolutionBenchmark SolutionBenchmark { get; set; } = new QapSolutionBenchmark(); 
 
         public QapSolver(QapData data)
         {

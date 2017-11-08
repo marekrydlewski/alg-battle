@@ -10,7 +10,6 @@ namespace AlgBattle.Solvers
     {
         public QapGreedyLocalSolver(QapData data) : base(data)
         {
-            
         }
 
         public override int[] GetSolution()
@@ -20,7 +19,7 @@ namespace AlgBattle.Solvers
                 Size = Data.Distances.Length,
                 Solution = this.GetList(this.GetRandomInitSolution())
             };
-            QapSolutionBenchmark benchmark = new QapSolutionBenchmark(Data, solution);
+            DeltaSolutionBenchmark benchmark = new DeltaSolutionBenchmark(Data, solution);
             bool isLocalMinimum = false;
             while (!isLocalMinimum)
             {
@@ -32,7 +31,7 @@ namespace AlgBattle.Solvers
             return benchmark.ActualBestSolution.Solution.ToArray();
         }
 
-        private bool CheckIfBetterNeighborExist(QapSolutionBenchmark benchmark)
+        private bool CheckIfBetterNeighborExist(DeltaSolutionBenchmark benchmark)
         {
             for (int i = 0; i < benchmark.ActualBestSolution.Size - 2; i++)
             {
