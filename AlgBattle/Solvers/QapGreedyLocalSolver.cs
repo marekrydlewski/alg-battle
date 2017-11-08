@@ -35,7 +35,7 @@ namespace AlgBattle.Solvers
         {
             for (int i = 0; i < benchmark.ActualBestSolution.Size - 2; i++)
             {
-                for (int j = i + 1; i < benchmark.ActualBestSolution.Size - 1; i++)
+                for (int j = i + 1; j < benchmark.ActualBestSolution.Size - 1; j++)
                 {
                     if (benchmark.CheckIfSolutionChangeIsBetter(i, j))
                     {

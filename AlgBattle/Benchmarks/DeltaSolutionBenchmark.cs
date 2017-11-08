@@ -1,4 +1,5 @@
 ﻿using AlgBattle.DataReaders;
+using AlgBattle.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,16 +20,19 @@ namespace AlgBattle.Benchmarks
 
         public DeltaSolutionBenchmark(QapData data, QapSolution solution)
         {
+            QapSolutionBenchmark bench = new QapSolutionBenchmark();
             ActualBestSolution = solution;
             Data = data;
             SwapCounter = 0;
-            ActualBestSolution.Score = RateSolution();
+            ActualBestSolution.Score = bench.RateSolution(solution.Solution.ToArray(), data);
             CalcDeltaTable();
         }
 
         public void ChangeSolution(int p, int q)
         {
-            SwapCounter++;
+            SwapCounter++;            
+            ConsoleSpiner.Print(ActualBestSolution.Score.ToString());
+
             int piP = ActualBestSolution.Solution[p];
             int piQ = ActualBestSolution.Solution[q];
 
@@ -41,21 +45,20 @@ namespace AlgBattle.Benchmarks
                 int piI = ActualBestSolution.Solution[i];
                 for (int j = 0; j < tableSize; j++)
                 {
-                    if (i!=q && i!=p && j!=p && j!= q)
-                    {
-                        int piJ = ActualBestSolution.Solution[j];                        
+                    int piJ = ActualBestSolution.Solution[j];
+                    /*if (i!=q && i!=p && j!=p && j!= q)
+                    {                        
                         DeltaTable[i, j] = 
                             DeltaTable[i, j] + 
                             (Data.Distances[p][i] - Data.Distances[p][j] + Data.Distances[q][j] - Data.Distances[q][i])*
                             (Data.Flows[piP][piJ] - Data.Flows[piP][piI] + Data.Flows[piQ][piI] - Data.Flows[piQ][piJ])+
                             (Data.Distances[i][p] - Data.Distances[j][p] + Data.Distances[j][q] - Data.Distances[i][q])*
                             (Data.Flows[piJ][piP] - Data.Flows[piI][piP] + Data.Flows[piI][piQ] - Data.Flows[piJ][piQ]);
-                    }else
+                    }else*/
                     //if ((i == p && j != q)||(i != p && j == q)||(i == q && j != p)|| (i != q && j == p)||(i==q && j==p))
-                    {
-                        int piJ = ActualBestSolution.Solution[j];
+                    //{                        
                         CalcDelta(tableSize, i, j, piJ, piI);
-                    }
+                    //}
                 }
             }
         }
@@ -65,8 +68,7 @@ namespace AlgBattle.Benchmarks
             if (DeltaTable[swapX, swapY]<0) {
                 return true;
             }
-            else
-            {
+            else{
                 return false;
             }
         }
@@ -74,38 +76,7 @@ namespace AlgBattle.Benchmarks
         public int RateSolutionChange(int swapX, int swapY)
         {
             return ActualBestSolution.Score + DeltaTable[swapX, swapY];
-        }
-
-        public int RateInsert(int[] sol, QapData data, int facility, int location)
-        {
-            int cost = 0;
-            for (int i = 0; i < sol.Length; ++i)
-            {
-                if (sol[i] != -1)
-                {
-                    cost += data.Distances[i][location] * data.Flows[sol[i]][facility];
-                }
-            }
-            return cost;
-        }
-
-        public int RateSolution()
-        {
-            //indexes are locations, values means facilites
-            //distances of locations, flows of facilites
-            List<int> sol = ActualBestSolution.Solution;
-            int fitness = 0;
-            for (int i = 0; i < sol.Count(); ++i)
-            {
-                for (int j = i + 1; j < sol.Count(); ++j)
-                {
-                    int xi = sol[i];
-                    int xj = sol[j];
-                    fitness += Data.Distances[i][j] * Data.Flows[xi][xj];
-                }
-            }
-            return fitness;
-        }
+        }     
 
         private void CalcDelta(int tableSize, int i, int j, int piJ, int piI)
         {

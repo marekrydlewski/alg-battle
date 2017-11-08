@@ -13,8 +13,8 @@ namespace AlgBattle
         {
             Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             var qapDataReader = new QapDataFileReader();
-            var data = qapDataReader.ReadData(@"Data/BaseData/tai100b.dat");
-            var solution = qapDataReader.ReadSolution(@"Data/BaseData/tai100b.sln");
+            var data = qapDataReader.ReadData(@"Data/BaseData/bur26b.dat");
+            var solution = qapDataReader.ReadSolution(@"Data/BaseData/bur26b.sln");
             var bench = new QapSolutionBenchmark();
             LocalOptimumValidator validator = new LocalOptimumValidator();
             //caution: some data files have got only instances without solutions
