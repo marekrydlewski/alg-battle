@@ -22,14 +22,16 @@ namespace AlgBattle
             //var initializedData = fullData.ToList();
             Console.WriteLine($"Optimal::: {string.Join(" ", solution.Solution)}");
             Console.WriteLine($"Fitness:::: {solution.Score}");
-            Console.WriteLine($"Fitness Ours:::: {bench.RateSolutionIndexedFromZero(solution.Solution.ToArray(), data)}");            
+            Console.WriteLine($"Fitness Ours:::: {bench.RateSolutionIndexedFromZero(solution.Solution.ToArray(), data)}");
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(solution.Solution.ToArray(), data, true)}");
+
             Stopwatch sw = new Stopwatch();
             sw.Start();
             var randomSolver = new QapRandomSolver(data);
             var randomSolution = randomSolver.GetSolution();
             Console.WriteLine($"Random:::: {string.Join(" ", randomSolution)}");
             Console.WriteLine($"Fitness:::: {bench.RateSolution(randomSolution, data)}");
-            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(randomSolution, data)}");
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(randomSolution, data, false)}");
 
            /* var heuristicSolver = new QapHeuristicSolver(data);
             var heuristicSolution = heuristicSolver.GetSolution();
@@ -42,13 +44,13 @@ namespace AlgBattle
             var steepestSolution = steepestSolver.GetSolution();
             Console.WriteLine($"Steepest:: {string.Join(" ", steepestSolution)}");
             Console.WriteLine($"Fitness:::: {bench.RateSolution(steepestSolution, data)}");
-            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(steepestSolution, data)}");
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(steepestSolution, data, false)}");
 
             var greedySolver = new QapGreedyLocalSolver(data);
             var greedySolution = greedySolver.GetSolution();
             Console.WriteLine($"Greedy:: {string.Join(" ", greedySolution)}");
             Console.WriteLine($"Fitness:::: {bench.RateSolution(greedySolution, data)}");
-            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(greedySolution, data)}");
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(greedySolution, data, false)}");
 
             sw.Stop();
             Console.WriteLine($"Elapsed medium time: {sw.Elapsed }");
