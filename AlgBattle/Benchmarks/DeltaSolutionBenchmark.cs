@@ -36,9 +36,8 @@ namespace AlgBattle.Benchmarks
             int piP = ActualBestSolution.Solution[p];
             int piQ = ActualBestSolution.Solution[q];
 
-            ActualBestSolution.Score += DeltaTable[p, q];
-            SwapValuesInSolution(p, q);
-           // DeltaTable[p, q] *= -1;
+            ActualBestSolution.Score += DeltaTable[p, q];            
+            DeltaTable[p, q] *= -1;
 
             int tableSize = Data.Distances.Count();
             for (int i = 0; i < tableSize; i++){
@@ -46,7 +45,7 @@ namespace AlgBattle.Benchmarks
                 for (int j = 0; j < tableSize; j++)
                 {
                     int piJ = ActualBestSolution.Solution[j];
-                    /*if (i!=q && i!=p && j!=p && j!= q)
+                    if (i!=q && i!=p && j!=p && j!= q)
                     {                        
                         DeltaTable[i, j] = 
                             DeltaTable[i, j] + 
@@ -54,11 +53,20 @@ namespace AlgBattle.Benchmarks
                             (Data.Flows[piP][piJ] - Data.Flows[piP][piI] + Data.Flows[piQ][piI] - Data.Flows[piQ][piJ])+
                             (Data.Distances[i][p] - Data.Distances[j][p] + Data.Distances[j][q] - Data.Distances[i][q])*
                             (Data.Flows[piJ][piP] - Data.Flows[piI][piP] + Data.Flows[piI][piQ] - Data.Flows[piJ][piQ]);
-                    }else*/
-                    //if ((i == p && j != q)||(i != p && j == q)||(i == q && j != p)|| (i != q && j == p)||(i==q && j==p))
-                    //{                        
+                    }
+                }
+            }
+            SwapValuesInSolution(p, q);
+            for (int i = 0; i < tableSize; i++)
+            {
+                int piI = ActualBestSolution.Solution[i];
+                for (int j = 0; j < tableSize; j++)
+                {
+                    int piJ = ActualBestSolution.Solution[j];
+                    if ((i == q || i == p || j == p || j != q) && !(i==p && j==q))
+                    {
                         CalcDelta(tableSize, i, j, piJ, piI);
-                    //}
+                    }
                 }
             }
         }

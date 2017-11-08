@@ -33,12 +33,12 @@ namespace AlgBattle
             Console.WriteLine($"Fitness:::: {bench.RateSolution(randomSolution, data)}");
             Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(randomSolution, data, false)}");
 
-           /* var heuristicSolver = new QapHeuristicSolver(data);
+            var heuristicSolver = new QapHeuristicSolver(data);
             var heuristicSolution = heuristicSolver.GetSolution();
             Console.WriteLine($"Heurstic:: {string.Join(" ", heuristicSolution)}");
             Console.WriteLine($"Fitness:::: {bench.RateSolution(heuristicSolution, data)}");
-            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(heuristicSolution, data)}");            
-            */
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(heuristicSolution, data, false)}");            
+            
 
             var steepestSolver = new QapSteepestLocalSolver(data);
             var steepestSolution = steepestSolver.GetSolution();
