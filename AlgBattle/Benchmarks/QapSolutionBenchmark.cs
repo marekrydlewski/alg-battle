@@ -63,6 +63,7 @@ namespace AlgBattle.Benchmarks
                 if (sol[i] != -1)
                 {
                     cost += data.Distances[i][location] * data.Flows[sol[i]][facility];
+                    cost += data.Distances[location][i] * data.Flows[facility][sol[i]];
                 }
             }
             return cost;

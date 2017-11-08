@@ -13,36 +13,42 @@ namespace AlgBattle
         {
             Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             var qapDataReader = new QapDataFileReader();
-            var data = qapDataReader.ReadData(@"Data/BaseData/bur26g.dat");
-            var solution = qapDataReader.ReadSolution(@"Data/BaseData/bur26g.sln");
+            var data = qapDataReader.ReadData(@"Data/BaseData/tai100b.dat");
+            var solution = qapDataReader.ReadSolution(@"Data/BaseData/tai100b.sln");
             var bench = new QapSolutionBenchmark();
+            LocalOptimumValidator validator = new LocalOptimumValidator();
             //caution: some data files have got only instances without solutions
             //var fullData = qapDataReader.LoadDirectory(@"Data/BaseData");
             //var initializedData = fullData.ToList();
             Console.WriteLine($"Optimal::: {string.Join(" ", solution.Solution)}");
             Console.WriteLine($"Fitness:::: {solution.Score}");
-            Console.WriteLine($"Fitness Ours:::: {bench.RateSolutionIndexedFromZero(solution.Solution.ToArray(), data)}");
+            Console.WriteLine($"Fitness Ours:::: {bench.RateSolutionIndexedFromZero(solution.Solution.ToArray(), data)}");            
             Stopwatch sw = new Stopwatch();
             sw.Start();
             var randomSolver = new QapRandomSolver(data);
             var randomSolution = randomSolver.GetSolution();
             Console.WriteLine($"Random:::: {string.Join(" ", randomSolution)}");
             Console.WriteLine($"Fitness:::: {bench.RateSolution(randomSolution, data)}");
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(randomSolution, data)}");
 
-            var heuristicSolver = new QapHeuristicSolver(data);
+           /* var heuristicSolver = new QapHeuristicSolver(data);
             var heuristicSolution = heuristicSolver.GetSolution();
             Console.WriteLine($"Heurstic:: {string.Join(" ", heuristicSolution)}");
             Console.WriteLine($"Fitness:::: {bench.RateSolution(heuristicSolution, data)}");
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(heuristicSolution, data)}");            
+            */
 
             var steepestSolver = new QapSteepestLocalSolver(data);
             var steepestSolution = steepestSolver.GetSolution();
             Console.WriteLine($"Steepest:: {string.Join(" ", steepestSolution)}");
             Console.WriteLine($"Fitness:::: {bench.RateSolution(steepestSolution, data)}");
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(steepestSolution, data)}");
 
             var greedySolver = new QapGreedyLocalSolver(data);
             var greedySolution = greedySolver.GetSolution();
             Console.WriteLine($"Greedy:: {string.Join(" ", greedySolution)}");
             Console.WriteLine($"Fitness:::: {bench.RateSolution(greedySolution, data)}");
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(greedySolution, data)}");
 
             sw.Stop();
             Console.WriteLine($"Elapsed medium time: {sw.Elapsed }");
