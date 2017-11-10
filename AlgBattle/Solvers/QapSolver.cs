@@ -13,7 +13,7 @@ namespace AlgBattle.Solvers
 
         public RandomGenerator Rnd { get; set; } = new RandomGenerator();
 
-        public QapSolutionBenchmark SolutionBenchmark { get; set; } = new QapSolutionBenchmark(); 
+        public QapSolutionBenchmark SolutionBenchmark { get; set; } = new QapSolutionBenchmark();         
 
         public QapSolver(QapData data)
         {
@@ -21,6 +21,8 @@ namespace AlgBattle.Solvers
         }
 
         public abstract int[] GetSolution();
+
+        public abstract int GetSwapCounter();
 
         public int[] GetRandomInitSolution()
         {

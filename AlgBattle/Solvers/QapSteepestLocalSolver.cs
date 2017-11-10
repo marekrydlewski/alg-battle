@@ -31,6 +31,11 @@ namespace AlgBattle.Solvers
             return benchmark.ActualBestSolution.Solution.ToArray();
         }
 
+        public override int GetSwapCounter()
+        {
+            throw new NotImplementedException();
+        }
+
         private bool CheckBestNeighbor(DeltaSolutionBenchmark benchmark)
         {
             int bestI = -1;
