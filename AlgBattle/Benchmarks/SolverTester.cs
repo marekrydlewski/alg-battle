@@ -8,5 +8,10 @@ namespace AlgBattle.Benchmarks
     class SolverTester
     {
         public QapSolver Solver { get; set; }
+
+        public SolverTester(QapSolver solver)
+        {
+            Solver = solver;
+        }
     }
 }
