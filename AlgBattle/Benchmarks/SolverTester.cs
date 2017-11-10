@@ -13,5 +13,7 @@ namespace AlgBattle.Benchmarks
         {
             Solver = solver;
         }
+
+        public 
     }
 }
