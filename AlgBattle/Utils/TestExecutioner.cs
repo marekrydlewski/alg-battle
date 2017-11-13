@@ -53,25 +53,25 @@ namespace AlgBattle.Utils
                 }
             }
 
-            using (StreamWriter file = new StreamWriter(outputNameTime))
+            using (StreamWriter file = File.AppendText(outputNameTime))
             {
                 for (int i = 0; i < 5; ++i)
                 {
                     for (int j = 0; j < files1.Count; ++j)
                     {
-                        file.Write(outputTime[i, j] + ",");
+                        file.Write(outputTime[j, i] + ",");
                     }
                     file.Write("\n");
                 }
             }
 
-            using (StreamWriter file = new StreamWriter(outputNameScore))
+            using (StreamWriter file = File.AppendText(outputNameScore))
             {
                 for (int i = 0; i < 5; ++i)
                 {
                     for (int j = 0; j < files1.Count; ++j)
                     {
-                        file.Write(outputScore[i, j] + ",");
+                        file.Write(outputScore[j, i] + ",");
                     }
                     file.Write("\n");
                 }
