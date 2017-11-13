@@ -15,5 +15,10 @@ namespace AlgBattle.Solvers
         {            
             return this.GetRandomInitSolution();
         }
+
+        public override int GetSwapCounter()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

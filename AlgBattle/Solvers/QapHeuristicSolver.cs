@@ -15,5 +15,10 @@ namespace AlgBattle.Solvers
         {
             return GetGreedyInitSolution();
         }
+
+        public override int GetSwapCounter()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
