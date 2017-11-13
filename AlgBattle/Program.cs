@@ -15,8 +15,8 @@ namespace AlgBattle
             // chr25a - duze roznice random vs reszta, naiwne niezle
             Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             var qapDataReader = new QapDataFileReader();
-            var data = qapDataReader.ReadData(@"Data/BaseData/chr25a.dat");
-            var solution = qapDataReader.ReadSolution(@"Data/BaseData/chr25a.sln");
+            var data = qapDataReader.ReadData(@"Data/BaseData/tai50b.dat");
+            var solution = qapDataReader.ReadSolution(@"Data/BaseData/tai50b.sln");
             var bench = new QapSolutionBenchmark();
             LocalOptimumValidator validator = new LocalOptimumValidator();
             //caution: some data files have got only instances without solutions
@@ -39,7 +39,7 @@ namespace AlgBattle
             var heuristicSolution = heuristicSolver.GetSolution();
             Console.WriteLine($"Heurstic:: {string.Join(" ", heuristicSolution)}");
             Console.WriteLine($"Fitness:::: {bench.RateSolution(heuristicSolution, data)}");
-            //Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(heuristicSolution, data, false)}");            
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(heuristicSolution, data, false)}");
 
             var steepestSolver = new QapSteepestLocalSolver(data);
             var steepestSolution = steepestSolver.GetSolution();
