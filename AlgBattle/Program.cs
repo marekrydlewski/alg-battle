@@ -15,7 +15,7 @@ namespace AlgBattle
             //instancje do analizy
             // chr25a - duze roznice random vs reszta, naiwne niezle
             var test = new TestExecutioner();
-            test.RunTest();
+            test.RunTest(5, "chrOutput");
             //Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             //var qapDataReader = new QapDataFileReader();
             //var data = qapDataReader.ReadData(@"Data/BaseData/tai50b.dat");
