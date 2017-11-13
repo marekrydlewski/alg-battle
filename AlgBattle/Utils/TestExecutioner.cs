@@ -59,7 +59,7 @@ namespace AlgBattle.Utils
                 {
                     for (int j = 0; j < files1.Count; ++j)
                     {
-                        file.Write(outputTime[j, i] + ",");
+                        file.Write(outputTime[j, i] + ";");
                     }
                     file.Write("\n");
                 }
@@ -71,7 +71,7 @@ namespace AlgBattle.Utils
                 {
                     for (int j = 0; j < files1.Count; ++j)
                     {
-                        file.Write(outputScore[j, i] + ",");
+                        file.Write(outputScore[j, i] + ";");
                     }
                     file.Write("\n");
                 }
