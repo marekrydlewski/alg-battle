@@ -8,7 +8,7 @@ namespace AlgBattle.DataReaders
 {
     public class QapDataFileReader
     {
-        public bool WarningsEnabled { get; set; } = false;
+        public bool WarningsEnabled { get; set; } = true;
 
         public QapData ReadData(string filePath)
         {
