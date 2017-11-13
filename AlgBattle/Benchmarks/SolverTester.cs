@@ -14,6 +14,7 @@ namespace AlgBattle.Benchmarks
             Solver = solver;
         }
 
-        public 
+        //public
+        //pawlok xD
     }
 }
