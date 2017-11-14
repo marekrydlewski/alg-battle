@@ -63,7 +63,7 @@ namespace AlgBattle.Benchmarks
                 for (int j = 0; j < tableSize; j++)
                 {
                     int piJ = ActualBestSolution.Solution[j];
-                    if ((i == q || i == p || j == p || j == q) && !(i==p && j==q))
+                    if ((i == q || i == p || j == p || j != q) && !(i==p && j==q))
                     {
                         CalcDelta(tableSize, i, j, piJ, piI);
                     }
