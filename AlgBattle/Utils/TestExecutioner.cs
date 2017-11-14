@@ -24,12 +24,12 @@ namespace AlgBattle.Utils
     {
         private static readonly IList<string> FileNames = new List<string> { "chr12a", "chr15a", "chr18a", "chr20a", "chr22a", "chr25a" };
 
-        private int GetMedian(List<int> numbers)
+        private ulong GetMedian(List<ulong> numbers)
         {
             int numberCount = numbers.Count();
             int halfIndex = numbers.Count() / 2;
             var sortedNumbers = numbers.OrderBy(n => n);
-            double median;
+            ulong median;
             if ((numberCount % 2) == 0)
             {
                 median = sortedNumbers.ElementAt(halfIndex) +
@@ -39,7 +39,7 @@ namespace AlgBattle.Utils
             {
                 median = sortedNumbers.ElementAt(halfIndex);
             }
-            return Convert.ToInt32(median);
+            return median;
         }
 
         private QapSolver GetAlgorithm(int a, QapData data)
@@ -72,12 +72,12 @@ namespace AlgBattle.Utils
             var outputNameCheckedElems = outputName + "_checked_elems_gs.csv";
 
             var bench = new QapSolutionBenchmark();
-            var outputScore = new UInt64 [fileNames.Count, 4];
+            var outputScore = new ulong [fileNames.Count, 4];
             var outputTime = new int [fileNames.Count, 4];
 
-            var outputMin = new int[fileNames.Count, 4];
-            var outputMax = new int[fileNames.Count, 4];
-            var outputMedian = new int[fileNames.Count, 4];
+            var outputMin = new ulong[fileNames.Count, 4];
+            var outputMax = new ulong[fileNames.Count, 4];
+            var outputMedian = new ulong[fileNames.Count, 4];
             var outputStd = new int[fileNames.Count, 4];
 
             var outputSteps = new int[fileNames.Count, 2];
@@ -88,8 +88,8 @@ namespace AlgBattle.Utils
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    outputMin[i, j] = Int32.MaxValue;
-                    outputMax[i, j] = Int32.MinValue;
+                    outputMin[i, j] = UInt64.MaxValue;
+                    outputMax[i, j] = 0;
                 }
             }
 
@@ -107,13 +107,13 @@ namespace AlgBattle.Utils
                 {
                     var algorithm = GetAlgorithm(a, data);
                     Console.WriteLine("File: " + s + "Alg num: " + a);
-                    var tempList = new List<int>();
+                    var tempList = new List<ulong>();
                     for (int j = 0; j < reps; j++)
                     {
                         sw.Start();
                         var sol = algorithm.GetSolution();
                         sw.Stop();
-                        int rate = bench.RateSolution(sol, data);
+                        ulong rate = bench.RateSolution(sol, data);
                         mediumRate += Convert.ToUInt64(rate);
                         if (rate > outputMax[i, a])
                         {
@@ -132,7 +132,7 @@ namespace AlgBattle.Utils
                         }
                     }
                     outputMedian[i, a] = this.GetMedian(tempList);
-                    outputStd[i, a] = Convert.ToInt32(tempList.StandardDeviation());
+                    outputStd[i, a] = Convert.ToInt32(tempList.Select(x => Convert.ToInt32(x)).ToList().StandardDeviation());
                     mediumRate /= Convert.ToUInt64(reps);
                     var mediumTime = sw.Elapsed.TotalMilliseconds / reps;
                     sw.Reset();

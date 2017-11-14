@@ -24,7 +24,7 @@ namespace AlgBattle.Benchmarks
             ActualBestSolution = solution;
             Data = data;
             SwapCounter = 0;
-            ActualBestSolution.Score = bench.RateSolution(solution.Solution.ToArray(), data);
+            ActualBestSolution.Score = Convert.ToInt32(bench.RateSolution(solution.Solution.ToArray(), data));
             CalcDeltaTable();
         }
 

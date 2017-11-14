@@ -9,22 +9,19 @@ namespace AlgBattle.Benchmarks
 {
     public class QapSolutionBenchmark
     {
-        public int RateSolution(int[] sol, QapData data)
+        public ulong RateSolution(int[] sol, QapData data)
         {
             //indexes are locations, values means facilites
             //distances of locations, flows of facilites
-            int fitness = 0;
+            ulong fitness = 0;
             for (int i = 0; i < sol.Count(); ++i)
             {
                 for (int j = 0; j < sol.Count(); ++j)
                 {
-                    //if (i != j)
-                    {
-                        int xi = sol[i];
-                        int xj = sol[j];
-                        fitness += data.Distances[i][j] * data.Flows[xi][xj];
 
-                    }
+                    int xi = sol[i];
+                    int xj = sol[j];
+                    fitness += Convert.ToUInt64(data.Distances[i][j]) * Convert.ToUInt64(data.Flows[xi][xj]);
 
                 }
             }
