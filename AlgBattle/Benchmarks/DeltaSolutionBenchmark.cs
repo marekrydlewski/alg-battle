@@ -31,16 +31,18 @@ namespace AlgBattle.Benchmarks
         public void ChangeSolution(int p, int q)
         {
             SwapCounter++;            
-            ConsoleSpiner.Print(ActualBestSolution.Score.ToString());
+            //ConsoleSpiner.Print(ActualBestSolution.Score.ToString());
 
             int piP = ActualBestSolution.Solution[p];
             int piQ = ActualBestSolution.Solution[q];
-
-            ActualBestSolution.Score += DeltaTable[p, q];            
-            DeltaTable[p, q] *= -1;
+           
+            
 
             int tableSize = Data.Distances.Count();
-            for (int i = 0; i < tableSize; i++){
+
+            ActualBestSolution.Score += DeltaTable[p, q];
+
+            /*for (int i = 0; i < tableSize; i++){
                 int piI = ActualBestSolution.Solution[i];
                 for (int j = 0; j < tableSize; j++)
                 {
@@ -55,7 +57,8 @@ namespace AlgBattle.Benchmarks
                             (Data.Flows[piJ][piP] - Data.Flows[piI][piP] + Data.Flows[piI][piQ] - Data.Flows[piJ][piQ]);
                     }
                 }
-            }
+            }*/
+            //DeltaTable[p, q] *= -1;
             SwapValuesInSolution(p, q);
             for (int i = 0; i < tableSize; i++)
             {
@@ -63,10 +66,14 @@ namespace AlgBattle.Benchmarks
                 for (int j = 0; j < tableSize; j++)
                 {
                     int piJ = ActualBestSolution.Solution[j];
-                    if ((i == q || i == p || j == p || j != q) && !(i==p && j==q))
+                    CalcDelta(tableSize, i, j, piJ, piI);
+                    //if (!(i != q && i != p && j != p && j != q))
+                    //{
+                    //}                    
+                    /*if ((i == q || i == p || j == p || j == q))// && !(i==p && j==q))
                     {
                         CalcDelta(tableSize, i, j, piJ, piI);
-                    }
+                    }*/
                 }
             }
         }
