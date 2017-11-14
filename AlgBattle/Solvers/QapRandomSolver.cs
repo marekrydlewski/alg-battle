@@ -13,7 +13,8 @@ namespace AlgBattle.Solvers
 
         public override int[] GetSolution()
         {            
-            return this.GetRandomInitSolution();
+            FirstSolution = this.GetRandomInitSolution();
+            return FirstSolution;
         }
 
         public override int GetSwapCounter()

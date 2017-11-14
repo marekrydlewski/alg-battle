@@ -20,6 +20,7 @@ namespace AlgBattle.Solvers
                 Size = Data.Distances.Length,
                 Solution = this.GetList(this.GetRandomInitSolution())
             };
+            FirstSolution = solution.Solution.ToArray();
             DeltaSolutionBenchmark benchmark = new DeltaSolutionBenchmark(Data, solution);
             CheckedElems = 0;
             bool isLocalMinimum = false;
