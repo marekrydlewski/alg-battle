@@ -21,11 +21,6 @@ namespace AlgBattle
             timerAll.Start();
             test.RunTest(20, "taiOutput", taiNames);
             timerAll.Stop();
-<<<<<<< HEAD
-            //Console.WriteLine(timerAll.Elapsed.Milliseconds);
-            //FirstVsLastResultTester test = new FirstVsLastResultTester("chr12b", 300);
-            //test.run();
-=======
             Console.WriteLine(timerAll.Elapsed.Milliseconds);*/
 
 
@@ -35,8 +30,7 @@ namespace AlgBattle
                 FirstVsLastResultTester test = new FirstVsLastResultTester(name, 300);
                 test.run();
             }
-            
->>>>>>> 1d680f87a215f409010400aec4087131b03d7327
+   
 
             //Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             //var qapDataReader = new QapDataFileReader();
