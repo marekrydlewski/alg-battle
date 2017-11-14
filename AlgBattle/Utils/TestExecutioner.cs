@@ -11,6 +11,15 @@ using AlgBattle.Solvers;
 
 namespace AlgBattle.Utils
 {
+    public static class Extend
+    {
+        public static double StandardDeviation(this IEnumerable<int> values)
+        {
+            double avg = values.Average();
+            return Math.Sqrt(values.Average(v => Math.Pow(v - avg, 2)));
+        }
+    }
+
     public class TestExecutioner
     {
         private static readonly IList<string> FileNames = new List<string> { "chr12a", "chr15a", "chr18a", "chr20a", "chr22a", "chr25a" };
@@ -32,28 +41,52 @@ namespace AlgBattle.Utils
             }
             return Convert.ToInt32(median);
         }
+
+        private QapSolver GetAlgorithm(int a, QapData data)
+        {
+            switch (a)
+            {
+                case 0:
+                    return new QapSimpleGreedySolver(data);
+                case 1:
+                    return new QapRandomSolver(data);
+                case 2:
+                    return new QapGreedyLocalSolver(data);
+                case 3:
+                    return new QapSteepestLocalSolver(data);
+            }
+            return null;
+        }
    
         public void RunTest(int reps =  5, string outputName = "output", IList<string> fileNames = null)
         {
             fileNames = fileNames ?? FileNames;
             var outputNameTime = outputName +  "_time.csv";
             var outputNameScore = outputName + "_score.csv";
-            var outputNameMin = outputName + "_min.csv";
-            var outputNameMax = outputName + "_max.csv";
-            var outputNameMedian = outputName + "_median.csv";
+            var outputNameMin = outputName + "_score_min.csv";
+            var outputNameMax = outputName + "_score_max.csv";
+            var outputNameMedian = outputName + "_score_median.csv";
+            var outputNameStd = outputName + "_score_std.csv";
+
+            var outputNameSteps = outputName + "_steps_gs.csv";
+            var outputNameCheckedElems = outputName + "_checked_elems_gs.csv";
 
             var bench = new QapSolutionBenchmark();
-            var outputScore = new int [fileNames.Count, 5];
-            var outputTime = new double [fileNames.Count, 5];
+            var outputScore = new UInt64 [fileNames.Count, 4];
+            var outputTime = new int [fileNames.Count, 4];
 
-            var outputMin = new int[fileNames.Count, 5];
-            var outputMax = new int[fileNames.Count, 5];
-            var outputMedian = new int[fileNames.Count, 5];
+            var outputMin = new int[fileNames.Count, 4];
+            var outputMax = new int[fileNames.Count, 4];
+            var outputMedian = new int[fileNames.Count, 4];
+            var outputStd = new int[fileNames.Count, 4];
+
+            var outputSteps = new int[fileNames.Count, 2];
+            var outputCheckedElems = new int[fileNames.Count, 2];
 
 
             for (int i = 0; i < fileNames.Count; ++i)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     outputMin[i, j] = Int32.MaxValue;
                     outputMax[i, j] = Int32.MinValue;
@@ -66,23 +99,22 @@ namespace AlgBattle.Utils
                 var qapDataReader = new QapDataFileReader();
                 var data = qapDataReader.ReadData(@"../AlgBattle/Data/BaseData/" + s + ".dat");
                 var solution = qapDataReader.ReadSolution(@"../AlgBattle/Data/BaseData/" + s + ".sln");
-                var algorithms = new List<QapSolver> { new QapRandomSolver(data), new QapHeuristicSolver(data), new QapGreedyLocalSolver(data), new QapGreedyLocalSolver(data), new QapSteepestLocalSolver(data) };
-
+                
                 Stopwatch sw = new Stopwatch();
-                int mediumRate = 0;
+                ulong mediumRate = 0;
 
-                for (int a = 0; a < algorithms.Count; ++a)
+                for (int a = 0; a < 4; ++a)
                 {
-                    var algorithm = algorithms[a];
+                    var algorithm = GetAlgorithm(a, data);
+                    Console.WriteLine("File: " + s + "Alg num: " + a);
                     var tempList = new List<int>();
                     for (int j = 0; j < reps; j++)
                     {
-                        var randomSolver = new QapRandomSolver(data);
                         sw.Start();
-                        var randomSolution = randomSolver.GetSolution();
+                        var sol = algorithm.GetSolution();
                         sw.Stop();
-                        int rate = bench.RateSolution(randomSolution, data);
-                        mediumRate += rate;
+                        int rate = bench.RateSolution(sol, data);
+                        mediumRate += Convert.ToUInt64(rate);
                         if (rate > outputMax[i, a])
                         {
                             outputMax[i, a] = rate;
@@ -92,21 +124,28 @@ namespace AlgBattle.Utils
                             outputMin[i, a] = rate;
                         }
                         tempList.Add(rate);
+
+                        if (a == 3 || a == 2) //GS
+                        {
+                            outputCheckedElems[i, a - 2] = algorithm.CheckedElems;
+                            outputSteps[i, a - 2] = algorithm.Steps;
+                        }
                     }
                     outputMedian[i, a] = this.GetMedian(tempList);
-                    mediumRate /= reps;
-                    var mediumTime = sw.Elapsed / reps;
+                    outputStd[i, a] = Convert.ToInt32(tempList.StandardDeviation());
+                    mediumRate /= Convert.ToUInt64(reps);
+                    var mediumTime = sw.Elapsed.TotalMilliseconds / reps;
                     sw.Reset();
 
                     //save
                     outputScore[i, a] = mediumRate;
-                    outputTime[i, a] = mediumTime.TotalMilliseconds;
+                    outputTime[i, a] = Convert.ToInt32(mediumTime);
                 }
             }
 
             using (StreamWriter file = File.AppendText(outputNameTime))
             {
-                for (int i = 0; i < 5; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -118,7 +157,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameScore))
             {
-                for (int i = 0; i < 5; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -130,7 +169,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameMin))
             {
-                for (int i = 0; i < 5; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -142,7 +181,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameMax))
             {
-                for (int i = 0; i < 5; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -154,11 +193,47 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameMedian))
             {
-                for (int i = 0; i < 5; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
                         file.Write(outputMedian[j, i] + ";");
+                    }
+                    file.Write("\n");
+                }
+            }
+
+            using (StreamWriter file = File.AppendText(outputNameStd))
+            {
+                for (int i = 0; i < 4; ++i)
+                {
+                    for (int j = 0; j < fileNames.Count; ++j)
+                    {
+                        file.Write(outputStd[j, i] + ";");
+                    }
+                    file.Write("\n");
+                }
+            }
+
+            using (StreamWriter file = File.AppendText(outputNameCheckedElems))
+            {
+                for (int i = 0; i < 2; ++i)
+                {
+                    for (int j = 0; j < fileNames.Count; ++j)
+                    {
+                        file.Write(outputCheckedElems[j, i] + ";");
+                    }
+                    file.Write("\n");
+                }
+            }
+
+            using (StreamWriter file = File.AppendText(outputNameSteps))
+            {
+                for (int i = 0; i < 2; ++i)
+                {
+                    for (int j = 0; j < fileNames.Count; ++j)
+                    {
+                        file.Write(outputSteps[j, i] + ";");
                     }
                     file.Write("\n");
                 }

@@ -28,6 +28,7 @@ namespace AlgBattle.Solvers
                     isLocalMinimum = true;
                 }
             }
+            Steps = benchmark.SwapCounter;
             return benchmark.ActualBestSolution.Solution.ToArray();
         }
 
@@ -42,6 +43,7 @@ namespace AlgBattle.Solvers
             {
                 for (int j = i + 1; j < benchmark.ActualBestSolution.Size - 1; j++)
                 {
+                    CheckedElems++;
                     if (benchmark.CheckIfSolutionChangeIsBetter(i, j))
                     {
                         benchmark.ChangeSolution(i, j);

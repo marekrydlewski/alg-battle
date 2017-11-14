@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using AlgBattle.DataReaders;
 using AlgBattle.Benchmarks;
@@ -20,6 +21,7 @@ namespace AlgBattle.Solvers
                 Solution = this.GetList(this.GetRandomInitSolution())
             };
             DeltaSolutionBenchmark benchmark = new DeltaSolutionBenchmark(Data, solution);
+            CheckedElems = 0;
             bool isLocalMinimum = false;
             while (!isLocalMinimum)
             {
@@ -28,6 +30,8 @@ namespace AlgBattle.Solvers
                     isLocalMinimum = true;
                 }
             }
+            CheckedElems = benchmark.SwapCounter * Data.Size * (Data.Size - 1);
+            Steps = benchmark.SwapCounter;
             return benchmark.ActualBestSolution.Solution.ToArray();
         }
 

@@ -13,7 +13,11 @@ namespace AlgBattle.Solvers
 
         public RandomGenerator Rnd { get; set; } = new RandomGenerator();
 
-        public QapSolutionBenchmark SolutionBenchmark { get; set; } = new QapSolutionBenchmark();         
+        public QapSolutionBenchmark SolutionBenchmark { get; set; } = new QapSolutionBenchmark();
+
+        public int CheckedElems { get; set; }
+
+        public int Steps { get; set; }
 
         public QapSolver(QapData data)
         {
@@ -87,9 +91,11 @@ namespace AlgBattle.Solvers
                         }
                     }
                 }
-                solution[newLocation] = newFacility;
-                alreadyInserted++;
-                remainingFacilities.Remove(newFacility);
+                    solution[newLocation] = newFacility;
+                    alreadyInserted++;
+                    remainingFacilities.Remove(newFacility);
+                
+
             }
             return solution;
         }

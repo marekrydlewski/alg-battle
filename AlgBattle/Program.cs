@@ -1,5 +1,6 @@
 ﻿using AlgBattle.DataReaders;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using AlgBattle.Benchmarks;
@@ -14,8 +15,15 @@ namespace AlgBattle
         {
             //instancje do analizy
             // chr25a - duze roznice random vs reszta, naiwne niezle
+            IList<string> taiNames = new List<string> { "tai15b", "tai20b", "tai30b", /*"tai40b", "tai50b", "tai60b", "tai80b", "tai150b"*/ };
             var test = new TestExecutioner();
-            test.RunTest(5, "chrOutput");
+            var timerAll = new Stopwatch();
+            timerAll.Start();
+            test.RunTest(10, "taiOutput", taiNames);
+            timerAll.Stop();
+            Console.WriteLine(timerAll.Elapsed.Milliseconds);
+
+
             //Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             //var qapDataReader = new QapDataFileReader();
             //var data = qapDataReader.ReadData(@"Data/BaseData/tai50b.dat");
