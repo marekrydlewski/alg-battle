@@ -17,6 +17,8 @@ namespace AlgBattle.Solvers
 
         public int CheckedElems { get; set; }
 
+        public int[] FirstSolution { get; set; }
+
         public int Steps { get; set; }
 
         public QapSolver(QapData data)
