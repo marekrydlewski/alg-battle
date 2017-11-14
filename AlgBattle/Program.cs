@@ -24,8 +24,8 @@ namespace AlgBattle
             Console.WriteLine(timerAll.Elapsed.Milliseconds);*/
 
 
-            ////////// test first vs last result
-            IList<string> taiNames = new List<string> { "tai15b", "tai20b", "tai25b", "tai30b", "tai35b", "tai40b", "bur26f", "chr12b", "chr20a" };
+            ////////// test first vs last result "tai15b", "tai20b", "tai25b", "tai30b", "tai35b",
+            IList<string> taiNames = new List<string> { "bur26a", "chr12a", "chr20b", "els19", "esc16a", "esc16j"};
             foreach (string name in taiNames){
                 FirstVsLastResultTester test = new FirstVsLastResultTester(name, 300);
                 test.run();

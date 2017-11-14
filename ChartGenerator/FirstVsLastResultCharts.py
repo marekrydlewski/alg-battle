@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cbook as cbook
 
-files = ["tai15b", "tai20b", "tai25b", "tai30b", "tai35b", "tai40b", "bur26f", "chr12b", "chr20a"]
+#files = ["tai15b", "tai20b", "tai25b", "tai30b", "bur26f", "chr12b", "chr20a"]
+files = ["bur26a", "chr12a", "chr20b", "els19", "esc16a", "esc16j"]
 #files = ['../AlgBattle/steepest_firstVsLastsResult_chr12b.csv',
  #        '../AlgBattle/greedyfirstVsLastsResult_chr12b.csv']
 
@@ -51,5 +52,5 @@ def create_chart(greedy_data, steepest_data, filename):
 
 for file in files:
     steepest_data = read_file('../AlgBattle/steepest_firstVsLastsResult_' + file + '.csv' )
-    greedy_data = read_file('../AlgBattle/greedyfirstVsLastsResult_' + file + '.csv')
+    greedy_data = read_file('../AlgBattle/greedy_firstVsLastsResult_' + file + '.csv')
     create_chart(greedy_data, steepest_data, file)
