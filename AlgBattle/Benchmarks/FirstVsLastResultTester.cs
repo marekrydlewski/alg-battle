@@ -29,7 +29,7 @@ namespace AlgBattle.Benchmarks
             QapSteepestLocalSolver sSolver = new QapSteepestLocalSolver(data);
             runSolver(sSolver, data, benchmark, optimalSolution, "steepest_" + outputFileName);
             QapGreedyLocalSolver gSolver = new QapGreedyLocalSolver(data);
-            runSolver(gSolver, data, benchmark, optimalSolution, "greedy" + outputFileName);
+            runSolver(gSolver, data, benchmark, optimalSolution, "greedy_" + outputFileName);
 
         }
 
