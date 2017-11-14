@@ -67,6 +67,7 @@ namespace AlgBattle.Utils
             var outputNameMax = outputName + "_score_max.csv";
             var outputNameMedian = outputName + "_score_median.csv";
             var outputNameStd = outputName + "_score_std.csv";
+            var outputNameSimilarity = outputName + "_score_similarity.csv";
 
             var outputNameSteps = outputName + "_steps_gs.csv";
             var outputNameCheckedElems = outputName + "_checked_elems_gs.csv";
@@ -79,6 +80,7 @@ namespace AlgBattle.Utils
             var outputMax = new ulong[fileNames.Count, 4];
             var outputMedian = new ulong[fileNames.Count, 4];
             var outputStd = new int[fileNames.Count, 4];
+            var outputSimilarity = new double[fileNames.Count, 4];
 
             var outputSteps = new int[fileNames.Count, 2];
             var outputCheckedElems = new int[fileNames.Count, 2];
@@ -103,6 +105,7 @@ namespace AlgBattle.Utils
                 Stopwatch sw = new Stopwatch();
                 
                 ulong mediumRate = 0;
+                double mediumSim = 0;
 
                 for (int a = 0; a < 4; ++a)
                 {
@@ -115,7 +118,9 @@ namespace AlgBattle.Utils
                         var sol = algorithm.GetSolution();
                         sw.Stop();
                         ulong rate = bench.RateSolution(sol, data);
+                        var sim = bench.RateSimilarity(sol, solution.Solution.ToArray());
                         mediumRate += Convert.ToUInt64(rate);
+                        mediumSim += sim;
                         if (rate > outputMax[i, a])
                         {
                             outputMax[i, a] = rate;
@@ -135,12 +140,14 @@ namespace AlgBattle.Utils
                     outputMedian[i, a] = this.GetMedian(tempList);
                     outputStd[i, a] = Convert.ToInt32(tempList.Select(x => Convert.ToInt32(x)).ToList().StandardDeviation());
                     mediumRate /= Convert.ToUInt64(reps);
+                    mediumSim /= reps;
                     var mediumTime = sw.Elapsed.TotalMilliseconds / reps;
                     sw.Reset();
 
                     //save
                     outputScore[i, a] = mediumRate;
                     outputTime[i, a] = Convert.ToInt32(mediumTime);
+                    outputSimilarity[i, a] = mediumSim;
                 }
             }
 
@@ -215,6 +222,19 @@ namespace AlgBattle.Utils
                     file.Write("\n");
                 }
             }
+
+            using (StreamWriter file = File.AppendText(outputNameSimilarity))
+            {
+                for (int i = 0; i < 4; ++i)
+                {
+                    for (int j = 0; j < fileNames.Count; ++j)
+                    {
+                        file.Write(outputSimilarity[j, i] + ";");
+                    }
+                    file.Write("\n");
+                }
+            }
+
 
             using (StreamWriter file = File.AppendText(outputNameCheckedElems))
             {
