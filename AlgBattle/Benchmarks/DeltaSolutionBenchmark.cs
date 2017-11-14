@@ -37,7 +37,7 @@ namespace AlgBattle.Benchmarks
             int piQ = ActualBestSolution.Solution[q];
 
             ActualBestSolution.Score += DeltaTable[p, q];            
-            DeltaTable[p, q] *= -1;
+            //DeltaTable[p, q] *= -1;
 
             int tableSize = Data.Distances.Count();
             for (int i = 0; i < tableSize; i++){
@@ -63,7 +63,7 @@ namespace AlgBattle.Benchmarks
                 for (int j = 0; j < tableSize; j++)
                 {
                     int piJ = ActualBestSolution.Solution[j];
-                    if ((i == q || i == p || j == p || j != q) && !(i==p && j==q))
+                    if ((i == q || i == p || j == p || j == q))// && !(i==p && j==q))
                     {
                         CalcDelta(tableSize, i, j, piJ, piI);
                     }
