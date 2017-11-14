@@ -19,8 +19,13 @@ namespace AlgBattle
             /*var test = new TestExecutioner();
             var timerAll = new Stopwatch();
             timerAll.Start();
-            test.RunTest(200, "taiOutput", taiNames);
+            test.RunTest(20, "taiOutput", taiNames);
             timerAll.Stop();
+<<<<<<< HEAD
+            //Console.WriteLine(timerAll.Elapsed.Milliseconds);
+            //FirstVsLastResultTester test = new FirstVsLastResultTester("chr12b", 300);
+            //test.run();
+=======
             Console.WriteLine(timerAll.Elapsed.Milliseconds);*/
 
 
@@ -31,11 +36,12 @@ namespace AlgBattle
                 test.run();
             }
             
+>>>>>>> 1d680f87a215f409010400aec4087131b03d7327
 
             //Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             //var qapDataReader = new QapDataFileReader();
-            //var data = qapDataReader.ReadData(@"Data/BaseData/tai50b.dat");
-            //var solution = qapDataReader.ReadSolution(@"Data/BaseData/tai50b.sln");
+            //var data = qapDataReader.ReadData(@"Data/BaseData/sko100c.dat");
+            //var solution = qapDataReader.ReadSolution(@"Data/BaseData/sko100c.sln");
             //var bench = new QapSolutionBenchmark();
             //LocalOptimumValidator validator = new LocalOptimumValidator();
             ////caution: some data files have got only instances without solutions

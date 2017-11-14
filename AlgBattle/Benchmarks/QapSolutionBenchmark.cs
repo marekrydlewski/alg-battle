@@ -65,5 +65,15 @@ namespace AlgBattle.Benchmarks
             }
             return cost;
         }
+
+        public double RateSimilarity(int[] sol, int[] orig)
+        {
+            double x = 0;
+            for (int i = 0; i < sol.Count(); ++i)
+            {
+                if (sol[i] == orig[i]) x++;
+            }
+            return x / Convert.ToDouble(sol.Length);
+        }
     }
 }
