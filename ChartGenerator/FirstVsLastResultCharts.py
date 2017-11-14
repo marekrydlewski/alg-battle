@@ -28,7 +28,7 @@ def create_chart(data, filename):
     data_x,data_y = convert_data(data)
 
     plt.scatter(data_x, data_y, s=np.ones(len(data_x)), c=np.ones(len(data_x)), alpha=0.5)
-    plt.show()
+    plt.savefig(filename + ".svg")
 
 
 
