@@ -15,11 +15,11 @@ namespace AlgBattle
         {
             //instancje do analizy
             // chr25a - duze roznice random vs reszta, naiwne niezle
-            IList<string> taiNames = new List<string> { "tai15b", "tai20b", "tai30b", "tai40b", "tai50b", /*"tai60b", "tai80b", "tai150b"*/ };
+            IList<string> taiNames = new List<string> { "tai15b", "tai20b","tai25b", "tai30b", "tai35b", "tai40b", "tai50b", "tai60b", "tai80b", /*"tai150b"*/ };
             var test = new TestExecutioner();
             var timerAll = new Stopwatch();
             timerAll.Start();
-            test.RunTest(10, "taiOutput", taiNames);
+            test.RunTest(200, "taiOutput", taiNames);
             timerAll.Stop();
             Console.WriteLine(timerAll.Elapsed.Milliseconds);
 

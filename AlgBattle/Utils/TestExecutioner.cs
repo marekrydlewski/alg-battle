@@ -101,6 +101,7 @@ namespace AlgBattle.Utils
                 var solution = qapDataReader.ReadSolution(@"../AlgBattle/Data/BaseData/" + s + ".sln");
                 
                 Stopwatch sw = new Stopwatch();
+                
                 ulong mediumRate = 0;
 
                 for (int a = 0; a < 4; ++a)
