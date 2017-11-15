@@ -6,6 +6,7 @@ using System.Linq;
 using AlgBattle.Benchmarks;
 using AlgBattle.Solvers;
 using AlgBattle.Utils;
+using System.IO;
 
 namespace AlgBattle
 {
@@ -24,11 +25,29 @@ namespace AlgBattle
             Console.WriteLine(timerAll.Elapsed.Milliseconds);*/
 
             ////////// test repeating "tai15b", "tai20b", "tai25b", "tai30b", "tai35b",, "chr20b", "els19", "esc16a", "esc16j"
-            IList<string> taiNames = new List<string> { "esc16j", "chr12a", "tai15b", "tai20b", "els19", "esc16a", "tai15a" };
+            /*IList<string> taiNames = new List<string> { "esc16j", "chr12a", "tai15b", "tai20b", "els19", "esc16a", "tai15a" };
             foreach (string name in taiNames)
             {
                 RepeatingTest test = new RepeatingTest(name, 300);
                 test.run();
+            }*/
+
+            //optimal list
+            IList<string> taiNames = new List<string> { "tai15b", "tai20b", "tai25b", "tai30b", "tai35b", "tai40b", "tai50b", "tai60b", "tai80b" };
+            List<ulong> list = new List<ulong>();
+            foreach (string name in taiNames)
+            {
+                var qapDataReader = new QapDataFileReader();
+                var data = qapDataReader.ReadData(@"../AlgBattle/Data/BaseData/" + name + ".dat");
+                var optimalSolution = qapDataReader.ReadSolution(@"../AlgBattle/Data/BaseData/" + name + ".sln");
+                list.Add((ulong)optimalSolution.Score);
+            }
+            using (StreamWriter file = File.AppendText("optimal_solutions"))
+            {
+                foreach (ulong line in list)
+                {
+                    file.WriteLine(line + ';');
+                }
             }
 
             ////////// test first vs last result "tai15b", "tai20b", "tai25b", "tai30b", "tai35b",, "chr20b", "els19", "esc16a", "esc16j"
@@ -37,7 +56,7 @@ namespace AlgBattle
                 FirstVsLastResultTester test = new FirstVsLastResultTester(name, 300);
                 test.run();
             }*/
-   
+
 
             //Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             //var qapDataReader = new QapDataFileReader();
