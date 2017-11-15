@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.cbook as cbook
 
 #files = ["tai15b", "tai20b", "tai25b", "tai30b", "bur26f", "chr12b", "chr20a"]
-files = ["bur26a", "chr12a", "chr20b", "els19", "esc16a", "esc16j"]
+files = ["esc16j", "chr12a"]#"bur26a", "chr12a", "chr20b", "els19", "esc16a", "esc16j"]
 #files = ['../AlgBattle/steepest_firstVsLastsResult_chr12b.csv',
  #        '../AlgBattle/greedyfirstVsLastsResult_chr12b.csv']
 
@@ -48,6 +48,7 @@ def create_chart(greedy_data, steepest_data, filename):
     ax.grid(True)
     plt.savefig(filename + ".svg")
     plt.savefig(filename + ".png")
+    plt.savefig(filename + ".pdf")
 
 
 for file in files:

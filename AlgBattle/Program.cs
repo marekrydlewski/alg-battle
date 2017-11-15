@@ -23,13 +23,20 @@ namespace AlgBattle
             timerAll.Stop();
             Console.WriteLine(timerAll.Elapsed.Milliseconds);*/
 
+            ////////// test repeating "tai15b", "tai20b", "tai25b", "tai30b", "tai35b",, "chr20b", "els19", "esc16a", "esc16j"
+            IList<string> taiNames = new List<string> { "esc16j", "chr12a", "tai15b", "tai20b", "els19", "esc16a", "tai15a" };
+            foreach (string name in taiNames)
+            {
+                RepeatingTest test = new RepeatingTest(name, 300);
+                test.run();
+            }
 
-            ////////// test first vs last result "tai15b", "tai20b", "tai25b", "tai30b", "tai35b",
-            IList<string> taiNames = new List<string> { "bur26a", "chr12a", "chr20b", "els19", "esc16a", "esc16j"};
+            ////////// test first vs last result "tai15b", "tai20b", "tai25b", "tai30b", "tai35b",, "chr20b", "els19", "esc16a", "esc16j"
+            /*IList<string> taiNames = new List<string> { "esc16j", "chr12a"};
             foreach (string name in taiNames){
                 FirstVsLastResultTester test = new FirstVsLastResultTester(name, 300);
                 test.run();
-            }
+            }*/
    
 
             //Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
