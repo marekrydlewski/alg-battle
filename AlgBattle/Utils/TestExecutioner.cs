@@ -74,7 +74,7 @@ namespace AlgBattle.Utils
 
             var bench = new QapSolutionBenchmark();
             var outputScore = new ulong [fileNames.Count, 4];
-            var outputTime = new int [fileNames.Count, 4];
+            var outputTime = new double [fileNames.Count, 4];
 
             var outputMin = new ulong[fileNames.Count, 4];
             var outputMax = new ulong[fileNames.Count, 4];
@@ -146,7 +146,7 @@ namespace AlgBattle.Utils
 
                     //save
                     outputScore[i, a] = mediumRate;
-                    outputTime[i, a] = Convert.ToInt32(mediumTime);
+                    outputTime[i, a] = mediumTime;
                     outputSimilarity[i, a] = mediumSim;
                 }
             }
