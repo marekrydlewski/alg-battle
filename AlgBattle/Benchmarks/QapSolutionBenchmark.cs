@@ -22,6 +22,27 @@ namespace AlgBattle.Benchmarks
                     int xi = sol[i];
                     int xj = sol[j];
                     fitness += Convert.ToUInt64(data.Distances[i][j]) * Convert.ToUInt64(data.Flows[xi][xj]);
+                    //fitness += (data.Distances[i][j]) * (data.Flows[xi][xj]);
+
+                }
+            }
+            return fitness;
+        }
+
+        public int RateSolutionInt(int[] sol, QapData data)
+        {
+            //indexes are locations, values means facilites
+            //distances of locations, flows of facilites
+            int fitness = 0;
+            for (int i = 0; i < sol.Count(); ++i)
+            {
+                for (int j = 0; j < sol.Count(); ++j)
+                {
+
+                    int xi = sol[i];
+                    int xj = sol[j];
+                    //fitness += Convert.ToUInt64(data.Distances[i][j]) * Convert.ToUInt64(data.Flows[xi][xj]);
+                    fitness += (data.Distances[i][j]) * (data.Flows[xi][xj]);
 
                 }
             }
@@ -42,7 +63,6 @@ namespace AlgBattle.Benchmarks
                         int xi = sol[i];
                         int xj = sol[j];
                         fitness += data.Distances[i][j] * data.Flows[xi - 1][xj - 1];
-
                     }
 
                 }
