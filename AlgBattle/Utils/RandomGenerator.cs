@@ -32,5 +32,10 @@ namespace AlgBattle
         {
             return elems[Rnd.Next(0, elems.Count)];
         }
+
+        public int RandomNumber(int begin, int end)
+        {
+            return Rnd.Next(begin, end);
+        }
     }
 }
