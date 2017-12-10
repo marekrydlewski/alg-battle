@@ -15,12 +15,12 @@ namespace AlgBattle.Solvers
         public QapTabuSolver(QapData data) : base(data)
         {
             Memory = CreateMemory(data.Size);
+            LengthOfMemory = 5;
         }
 
         public override int[] GetSolution()
         {
             var size = this.Data.Size;
-            LengthOfMemory = 5;
 
             QapSolution solution = new QapSolution
             {
@@ -30,6 +30,45 @@ namespace AlgBattle.Solvers
             FirstSolution = solution.Solution.ToArray();
             DeltaSolutionBenchmark benchmark = new DeltaSolutionBenchmark(Data, solution);
 
+            var solutions = new SortedDictionary<int, Tuple<int, int>>();
+            var currSolution = FirstSolution;
+            var bestScore = benchmark.ActualBestSolution.Score;
+
+            while(true)
+            {
+                for (int i = 0; i < benchmark.ActualBestSolution.Size - 2; i++)
+                {
+                    for (int j = i + 1; j < benchmark.ActualBestSolution.Size - 1; j++)
+                    {
+                        int neighborScore = benchmark.RateSolutionChange(i, j);
+                        solutions.Add(neighborScore, Tuple.Create(i, j));
+                    }
+                }
+
+                bool changed = false;
+                foreach (var entry in solutions)
+                {
+                    //if legal
+                    var x = entry.Value.Item1;
+                    var y = entry.Value.Item2;
+                    var proposedScore = entry.Key;
+                    if (Memory[x][y] == 0 || proposedScore < bestScore)
+                    {
+                        Memory[x][y] = LengthOfMemory;
+                        Memory[y][x] = LengthOfMemory;
+
+                        benchmark.ChangeSolution(x, y);
+                        //swap
+                        int temp = currSolution[x];
+                        currSolution[x] = currSolution[y];
+                        currSolution[y] = temp;
+                        changed = true;
+                        break;
+                    }
+                }
+
+                TickMemoryDown();
+            }
 
             throw new NotImplementedException();
         }

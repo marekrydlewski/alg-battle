@@ -40,9 +40,9 @@ namespace AlgBattle.Solvers
 
         private bool CheckIfBetterNeighborExist(DeltaSolutionBenchmark benchmark)
         {
-            for (int i = 0; i < benchmark.ActualBestSolution.Size - 2; i++)
+            for (int i = 0; i < benchmark.ActualBestSolution.Size - 1; i++)
             {
-                for (int j = i + 1; j < benchmark.ActualBestSolution.Size - 1; j++)
+                for (int j = i + 1; j < benchmark.ActualBestSolution.Size; j++)
                 {
                     CheckedElems++;
                     if (benchmark.CheckIfSolutionChangeIsBetter(i, j))
