@@ -21,16 +21,19 @@ namespace AlgBattle.Benchmarks
 
         public void run()
         {
-            string outputFileName = "firstVsLastsResult_" + InstanceName + ".csv";
+            string outputFileName = InstanceName + ".csv";
             var qapDataReader = new QapDataFileReader();
             QapSolutionBenchmark benchmark = new QapSolutionBenchmark();
             var data = qapDataReader.ReadData(@"../AlgBattle/Data/BaseData/" + InstanceName + ".dat");
             var optimalSolution = qapDataReader.ReadSolution(@"../AlgBattle/Data/BaseData/" + InstanceName + ".sln");
             QapSteepestLocalSolver sSolver = new QapSteepestLocalSolver(data);
-            runSolver(sSolver, data, benchmark, optimalSolution, "steepest_" + outputFileName);
+            runSolver(sSolver, data, benchmark, optimalSolution, "firstVsLastsResult_steepest_" + outputFileName);
             QapGreedyLocalSolver gSolver = new QapGreedyLocalSolver(data);
-            runSolver(gSolver, data, benchmark, optimalSolution, "greedy_" + outputFileName);
-
+            runSolver(gSolver, data, benchmark, optimalSolution, "firstVsLastsResult_greedy_" + outputFileName);
+            QapAnnealingSolver aSolver = new QapAnnealingSolver(data);
+            runSolver(aSolver, data, benchmark, optimalSolution, "firstVsLastsResult_annealing_" + outputFileName);
+            QapTabuSolver tSolver = new QapTabuSolver(data);
+            runSolver(tSolver, data, benchmark, optimalSolution, "firstVsLastsResult_tabu_" + outputFileName);
         }
 
         private void runSolver(QapSolver solver, QapData data, QapSolutionBenchmark benchmark, QapSolution optimalSolution, String outputFileName)

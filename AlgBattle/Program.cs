@@ -103,19 +103,19 @@ namespace AlgBattle
             }*/
 
             ////////// test first vs last result "tai15b", "tai20b", "tai25b", "tai30b", "tai35b",, "chr20b", "els19", "esc16a", "esc16j"
-            /*IList<string> taiNames = new List<string> { "esc16j", "chr12a"};
+            IList<string> taiNames = new List<string> { "bur26f", "tai15b", "chr12b", "chr20a", "esc16j"};
             foreach (string name in taiNames){
                 FirstVsLastResultTester test = new FirstVsLastResultTester(name, 300);
                 test.run();
-            }*/
+            }
 
             ////////// test repeating
-            IList<string> taiNames = new List<string> { "tai15a", "tai20b", "chr12a" };
+            /*IList<string> taiNames = new List<string> { "tai15a", "tai20b", "chr12a" };
             foreach (string name in taiNames)
             {
-                RepeatingTest test = new RepeatingTest(name, 10);
+                RepeatingTest test = new RepeatingTest(name, 200);
                 test.run();
-            }
+            }*/
         }
     }
 }

@@ -28,6 +28,7 @@ namespace AlgBattle.Solvers
                 Size = Data.Distances.Length,
                 Solution = this.GetList(currSolution)
             };
+            FirstSolution = solution.Solution.ToArray();
             DeltaSolutionBenchmark benchmark = new DeltaSolutionBenchmark(Data, solution);
             int bestEver = Int32.MaxValue;
             TempZero = 10000;
