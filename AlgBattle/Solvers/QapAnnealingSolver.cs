@@ -30,7 +30,7 @@ namespace AlgBattle.Solvers
             };
             DeltaSolutionBenchmark benchmark = new DeltaSolutionBenchmark(Data, solution);
             int bestEver = Int32.MaxValue;
-            TempZero = 10000;
+            TempZero = currSolution.Length * 800;
             Temp = TempZero;
             TempMin = 1;
             Steps = 10;
@@ -52,27 +52,32 @@ namespace AlgBattle.Solvers
                         currSolution[x] = currSolution[y];
                         currSolution[y] = temp;
                     }
+                    this.CheckedElems++;
                 }
                 Steps++;
                 if (Temp < 200)
                 {
                     UpdateTemp();
                 }
-                else
+                else if (Temp < 10000)
                 {
                     UpdateTemp3();
+                }
+                else
+                {
+                    UpdateTemp4();
                 }
                 //UpdateTemp();
 
                 //Console.WriteLine(Temp);
             }
-            Console.WriteLine(bestEver);
+            //Console.WriteLine(bestEver);
             return currSolution;
         }
 
         public void UpdateTemp()
         {
-            Temp = (0.992 * Temp);
+            Temp = (0.99 * Temp);
         }
 
         public void UpdateTemp2()
@@ -82,8 +87,14 @@ namespace AlgBattle.Solvers
 
         public void UpdateTemp3()
         {
-            Temp = TempZero / (1 + 6 * Math.Log(1 + Steps));
+            Temp = 10000 / (1 + 8 * Math.Log(1 + Steps));
         }
+
+        public void UpdateTemp4()
+        {
+            Temp = (0.82 * Temp);
+        }
+
 
 
         public bool AcceptSolution(int newScore, int oldScore, double divider)
