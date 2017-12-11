@@ -20,9 +20,9 @@ namespace AlgBattle.Benchmarks
             {
                 bestFitness = benchmark.RateSolution(solution, data);
             }            
-            for (int i = 0; i < size- 2; i++)
+            for (int i = 0; i < size- 1; i++)
             {
-                for (int j = i + 1; i < size- 1; i++)
+                for (int j = i + 1; i < size; i++)
                 {
                     var tempSolution = solution;
                     var temp = tempSolution[i];

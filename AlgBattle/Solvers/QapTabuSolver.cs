@@ -30,9 +30,10 @@ namespace AlgBattle.Solvers
             FirstSolution = solution.Solution.ToArray();
             DeltaSolutionBenchmark benchmark = new DeltaSolutionBenchmark(Data, solution);
 
-            var solutions = new SortedDictionary<int, Tuple<int, int>>();
+            var solutions = new SortedList<int, Tuple<int, int>>();
             var currSolution = FirstSolution;
             var bestScore = benchmark.ActualBestSolution.Score;
+            var bestSolution = new List<int>();
 
             while(true)
             {
@@ -63,14 +64,32 @@ namespace AlgBattle.Solvers
                         currSolution[x] = currSolution[y];
                         currSolution[y] = temp;
                         changed = true;
+                        if(benchmark.ActualBestSolution.Score < bestScore)
+                        {
+                            bestSolution = benchmark.ActualBestSolution.Solution;
+                        }
                         break;
                     }
                 }
+                if (!changed)
+                {
+                    //taki co najmniej psuje
+                    var x = solutions.Values[0].Item1;
+                    var y = solutions.Values[0].Item2;
 
+                    Memory[x][y] = LengthOfMemory;
+                    Memory[y][x] = LengthOfMemory;
+
+                    benchmark.ChangeSolution(x, y);
+                    //swap
+                    int temp = currSolution[x];
+                    currSolution[x] = currSolution[y];
+                    currSolution[y] = temp;
+                }
                 TickMemoryDown();
             }
 
-            throw new NotImplementedException();
+            return bestSolution.ToArray();
         }
 
         private int[][] CreateMemory(int size)
