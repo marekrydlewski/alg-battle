@@ -22,15 +22,19 @@ namespace AlgBattle.Benchmarks
 
         public void run()
         {
-            string outputFileName = "repeating_" + InstanceName + ".csv";
+            string outputFileName = InstanceName + ".csv";
             var qapDataReader = new QapDataFileReader();
             QapSolutionBenchmark benchmark = new QapSolutionBenchmark();
             var data = qapDataReader.ReadData(@"../AlgBattle/Data/BaseData/" + InstanceName + ".dat");
             var optimalSolution = qapDataReader.ReadSolution(@"../AlgBattle/Data/BaseData/" + InstanceName + ".sln");
             QapSteepestLocalSolver sSolver = new QapSteepestLocalSolver(data);
-            runSolver(sSolver, data, benchmark, optimalSolution, "steepest_" + outputFileName);
+            runSolver(sSolver, data, benchmark, optimalSolution, "repeating_steepest_" + outputFileName);
             QapGreedyLocalSolver gSolver = new QapGreedyLocalSolver(data);
-            runSolver(gSolver, data, benchmark, optimalSolution, "greedy_" + outputFileName);
+            runSolver(gSolver, data, benchmark, optimalSolution, "repeating_greedy_" + outputFileName);
+            QapAnnealingSolver aSolver = new QapAnnealingSolver(data);
+            runSolver(aSolver, data, benchmark, optimalSolution, "repeating_annealing_" + outputFileName);
+            QapTabuSolver tSolver = new QapTabuSolver(data);
+            runSolver(aSolver, data, benchmark, optimalSolution, "repeating_tabu_" + outputFileName);
 
         }
 
