@@ -47,9 +47,9 @@ namespace AlgBattle.Solvers
             int bestJ = -1;
             int bestScore = benchmark.ActualBestSolution.Score;
 
-            for (int i = 0; i < benchmark.ActualBestSolution.Size - 2; i++)
+            for (int i = 0; i < benchmark.ActualBestSolution.Size - 1; i++)
             {
-                for (int j = i + 1; j < benchmark.ActualBestSolution.Size - 1; j++)
+                for (int j = i + 1; j < benchmark.ActualBestSolution.Size; j++)
                 {
                     int neighborScore = benchmark.RateSolutionChange(i, j);
                     if (neighborScore<bestScore)

@@ -17,8 +17,8 @@ namespace AlgBattle
             //test annealing 
             Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             var qapDataReader = new QapDataFileReader();
-            var data = qapDataReader.ReadData(@"Data/BaseData/bur26g.dat");
-            var solution = qapDataReader.ReadSolution(@"Data/BaseData/bur26g.sln");
+            var data = qapDataReader.ReadData(@"Data/BaseData/chr12a.dat");
+            var solution = qapDataReader.ReadSolution(@"Data/BaseData/chr12a.sln");
             var bench = new QapSolutionBenchmark();
             LocalOptimumValidator validator = new LocalOptimumValidator();
             //caution: some data files have got only instances without solutions

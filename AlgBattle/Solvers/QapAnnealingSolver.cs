@@ -29,7 +29,7 @@ namespace AlgBattle.Solvers
                 Solution = this.GetList(currSolution)
             };
             DeltaSolutionBenchmark benchmark = new DeltaSolutionBenchmark(Data, solution);
-            int bestEver = 999999999;
+            int bestEver = Int32.MaxValue;
             TempZero = 10000;
             Temp = TempZero;
             TempMin = 1;
@@ -64,7 +64,7 @@ namespace AlgBattle.Solvers
                 }
                 //UpdateTemp();
 
-                Console.WriteLine(Temp);
+                //Console.WriteLine(Temp);
             }
             Console.WriteLine(bestEver);
             return currSolution;
@@ -72,7 +72,7 @@ namespace AlgBattle.Solvers
 
         public void UpdateTemp()
         {
-            Temp = (0.98 * Temp);
+            Temp = (0.99 * Temp);
         }
 
         public void UpdateTemp2()
@@ -82,7 +82,7 @@ namespace AlgBattle.Solvers
 
         public void UpdateTemp3()
         {
-            Temp = TempZero / (1 + 6 * Math.Log(1 + Steps));
+            Temp = TempZero / (1 + 5 * Math.Log(1 + Steps));
         }
 
 
