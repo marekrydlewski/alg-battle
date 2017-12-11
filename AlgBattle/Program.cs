@@ -17,8 +17,8 @@ namespace AlgBattle
             //test annealing 
             Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             var qapDataReader = new QapDataFileReader();
-            var data = qapDataReader.ReadData(@"Data/BaseData/chr12a.dat");
-            var solution = qapDataReader.ReadSolution(@"Data/BaseData/chr12a.sln");
+            var data = qapDataReader.ReadData(@"Data/BaseData/tai60a.dat");
+            var solution = qapDataReader.ReadSolution(@"Data/BaseData/tai60a.sln");
             var bench = new QapSolutionBenchmark();
             LocalOptimumValidator validator = new LocalOptimumValidator();
             //caution: some data files have got only instances without solutions
@@ -42,6 +42,12 @@ namespace AlgBattle
             Console.WriteLine($"Annealing:: {string.Join(" ", annealingSolution)}");
             Console.WriteLine($"Fitness:::: {bench.RateSolution(annealingSolution, data)}");
             Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(annealingSolution, data, false)}");
+
+            var tabuSolver = new QapTabuSolver(data);
+            var tabuSolution = tabuSolver.GetSolution();
+            Console.WriteLine($"Tabu:: {string.Join(" ", tabuSolution)}");
+            Console.WriteLine($"Fitness:::: {bench.RateSolution(tabuSolution, data)}");
+            Console.WriteLine($"Is local optimum::: {validator.CheckLocalOptimum(tabuSolution, data, false)}");
 
             var heuristicSolver = new QapHeuristicSolver(data);
             var heuristicSolution = heuristicSolver.GetSolution();

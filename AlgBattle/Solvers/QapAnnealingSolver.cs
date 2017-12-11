@@ -72,7 +72,7 @@ namespace AlgBattle.Solvers
 
         public void UpdateTemp()
         {
-            Temp = (0.99 * Temp);
+            Temp = (0.992 * Temp);
         }
 
         public void UpdateTemp2()
@@ -82,7 +82,7 @@ namespace AlgBattle.Solvers
 
         public void UpdateTemp3()
         {
-            Temp = TempZero / (1 + 5 * Math.Log(1 + Steps));
+            Temp = TempZero / (1 + 6 * Math.Log(1 + Steps));
         }
 
 
