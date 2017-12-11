@@ -30,16 +30,19 @@ namespace AlgBattle.Solvers
             FirstSolution = solution.Solution.ToArray();
             DeltaSolutionBenchmark benchmark = new DeltaSolutionBenchmark(Data, solution);
 
-            var solutions = new SortedList<int, Tuple<int, int>>();
+            var solutions = new SortedList<int, Tuple<int, int>>(new DuplicateKeyComparer<int>());
             var currSolution = FirstSolution;
             var bestScore = benchmark.ActualBestSolution.Score;
             var bestSolution = new List<int>();
+            int changeCounter = 0;
 
-            while(true)
+            while(changeCounter < 100)
             {
-                for (int i = 0; i < benchmark.ActualBestSolution.Size - 2; i++)
+                changeCounter++;
+                solutions.Clear();
+                for (int i = 0; i < benchmark.ActualBestSolution.Size - 1; i++)
                 {
-                    for (int j = i + 1; j < benchmark.ActualBestSolution.Size - 1; j++)
+                    for (int j = i + 1; j < benchmark.ActualBestSolution.Size; j++)
                     {
                         int neighborScore = benchmark.RateSolutionChange(i, j);
                         solutions.Add(neighborScore, Tuple.Create(i, j));
@@ -67,10 +70,14 @@ namespace AlgBattle.Solvers
                         if(benchmark.ActualBestSolution.Score < bestScore)
                         {
                             bestSolution = benchmark.ActualBestSolution.Solution;
+                            bestScore = benchmark.ActualBestSolution.Score;
                         }
+                        if (proposedScore < bestScore && Memory[x][y] == 0)
+                            changeCounter = 0;
                         break;
                     }
                 }
+
                 if (!changed)
                 {
                     //taki co najmniej psuje
