@@ -2,8 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cbook as cbook
 
-#files = ["tai15b", "tai20b", "tai25b", "tai30b", "bur26f", "chr12b", "chr20a"]
-files = ["esc16j", "chr12a"]#"bur26a", "chr12a", "chr20b", "els19", "esc16a", "esc16j"]
+files = ["bur26f"]#, "tai15b", "chr12b", "chr20a", "esc16j"]
 #files = ['../AlgBattle/steepest_firstVsLastsResult_chr12b.csv',
  #        '../AlgBattle/greedyfirstVsLastsResult_chr12b.csv']
 
@@ -26,9 +25,11 @@ def convert_data(data):
     return data_to_chart_x, data_to_chart_y
 
 
-def create_chart(greedy_data, steepest_data, filename):
+def create_chart(greedy_data, steepest_data, annealing_data, tabu_data, filename):
     g_data_x, g_data_y = convert_data(greedy_data)
     s_data_x, s_data_y = convert_data(steepest_data)
+    a_data_x, a_data_y = convert_data(annealing_data)
+    t_data_x, t_data_y = convert_data(tabu_data)
     fig, ax = plt.subplots()
     plt.xlabel('jakość początkowa')
     plt.ylabel('jakość końcowa')
@@ -44,14 +45,28 @@ def create_chart(greedy_data, steepest_data, filename):
                 label='steepest',
                 alpha=0.9,
                 edgecolors='none')
+    plt.scatter(a_data_x, a_data_y,
+                s=np.ones(len(g_data_x)) * 2,
+                c='green',
+                label='annealing',
+                alpha=0.9,
+                edgecolors='none')
+    plt.scatter(t_data_x, t_data_y,
+                s=np.ones(len(g_data_x)) * 2,
+                c='black',
+                label='tabu',
+                alpha=0.9,
+                edgecolors='none')
     ax.legend()
     ax.grid(True)
-    plt.savefig(filename + ".svg")
+    #plt.savefig(filename + ".svg")
     plt.savefig(filename + ".png")
     plt.savefig(filename + ".pdf")
 
 
 for file in files:
-    steepest_data = read_file('../AlgBattle/steepest_firstVsLastsResult_' + file + '.csv' )
-    greedy_data = read_file('../AlgBattle/greedy_firstVsLastsResult_' + file + '.csv')
-    create_chart(greedy_data, steepest_data, file)
+    greedy_data = read_file('../AlgBattle/firstVsLastsResult_greedy_' + file + '.csv' )
+    steepest_data = read_file('../AlgBattle/firstVsLastsResult_steepest_' + file + '.csv')
+    annealing_data = read_file('../AlgBattle/firstVsLastsResult_annealing_' + file + '.csv')
+    tabu_data = read_file('../AlgBattle/firstVsLastsResult_tabu_' + file + '.csv')
+    create_chart(greedy_data, steepest_data, annealing_data, tabu_data,  file)
