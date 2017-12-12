@@ -35,9 +35,11 @@ namespace AlgBattle.Solvers
             var bestScore = benchmark.ActualBestSolution.Score;
             var bestSolution = new List<int>();
             int changeCounter = 0;
+            Steps = 0;
 
-            while(changeCounter < 100)
+            while(changeCounter < 10)
             {
+                Steps++;
                 changeCounter++;
                 solutions.Clear();
                 for (int i = 0; i < benchmark.ActualBestSolution.Size - 1; i++)
@@ -58,6 +60,8 @@ namespace AlgBattle.Solvers
                     var proposedScore = entry.Key;
                     if (Memory[x][y] == 0 || proposedScore < bestScore)
                     {
+                        if (Memory[x][y] == 0 && proposedScore < bestScore)
+                            changeCounter = 0;
                         Memory[x][y] = LengthOfMemory;
                         Memory[y][x] = LengthOfMemory;
 
@@ -72,12 +76,10 @@ namespace AlgBattle.Solvers
                             bestSolution = benchmark.ActualBestSolution.Solution;
                             bestScore = benchmark.ActualBestSolution.Score;
                         }
-                        if (proposedScore < bestScore && Memory[x][y] == 0)
-                            changeCounter = 0;
+
                         break;
                     }
                 }
-
                 if (!changed)
                 {
                     //taki co najmniej psuje

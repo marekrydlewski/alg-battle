@@ -34,7 +34,7 @@ namespace AlgBattle.Solvers
             TempZero = currSolution.Length * 800;
             Temp = TempZero;
             TempMin = 1;
-            Steps = 10;
+            Steps = 0;
             while(Temp > TempMin)
             {
                 for(int i = 0; i < 10; i++)
@@ -52,10 +52,10 @@ namespace AlgBattle.Solvers
                         int temp = currSolution[x];
                         currSolution[x] = currSolution[y];
                         currSolution[y] = temp;
+                        Steps++;
                     }
                     this.CheckedElems++;
                 }
-                Steps++;
                 if (Temp < 200)
                 {
                     UpdateTemp();
