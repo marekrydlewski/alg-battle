@@ -67,7 +67,7 @@ namespace AlgBattle.Solvers
 
                 //Console.WriteLine(Temp);
             }
-            Console.WriteLine(bestEver);
+            //Console.WriteLine(bestEver);
             return currSolution;
         }
 

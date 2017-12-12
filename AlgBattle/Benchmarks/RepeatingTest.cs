@@ -34,7 +34,7 @@ namespace AlgBattle.Benchmarks
             QapAnnealingSolver aSolver = new QapAnnealingSolver(data);
             runSolver(aSolver, data, benchmark, optimalSolution, "repeating_annealing_" + outputFileName);
             QapTabuSolver tSolver = new QapTabuSolver(data);
-            runSolver(aSolver, data, benchmark, optimalSolution, "repeating_tabu_" + outputFileName);
+            runSolver(tSolver, data, benchmark, optimalSolution, "repeating_tabu_" + outputFileName);
 
         }
 
