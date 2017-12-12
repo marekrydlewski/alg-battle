@@ -21,7 +21,7 @@ namespace AlgBattle.Benchmarks
             var data = qapDataReader.ReadData(@"../AlgBattle/Data/BaseData/" + InstanceName + ".dat");
             var optimalSolution = qapDataReader.ReadSolution(@"../AlgBattle/Data/BaseData/" + InstanceName + ".sln");
             Console.WriteLine("Start processing");
-            QapHeuristicSolver hSolver = new QapHeuristicSolver(data);
+            QapSimpleGreedySolver hSolver = new QapSimpleGreedySolver(data);
             RunSolver(hSolver, data, benchmark, optimalSolution, "efficiency_heuristic_" + outputFileName);
             Console.WriteLine("Heuristic done");
             QapRandomSolver rSolver = new QapRandomSolver(data);
