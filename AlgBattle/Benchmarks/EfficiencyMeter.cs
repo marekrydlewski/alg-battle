@@ -56,7 +56,7 @@ namespace AlgBattle.Benchmarks
                 {
                     repetitionsWithoutProgress++;
                 }
-                var efficiency = bestSolutionScore / (ulong)optimalSolution.Score;
+                var efficiency =(double) (ulong)optimalSolution.Score / bestSolutionScore;
                 var time = sw.Elapsed.TotalMilliseconds;
                 list.Add(new double[] { efficiency, time});
 
