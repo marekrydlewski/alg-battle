@@ -12,6 +12,7 @@ namespace AlgBattle.Benchmarks
     {
         public String InstanceName { get; set; }
         public int MaxRepetitionsWithoutImprove{ get; set; }        
+        public int Repetitions { get; set; }
 
         public void run()
         {
@@ -47,29 +48,31 @@ namespace AlgBattle.Benchmarks
             int repetitionsWithoutProgress = 0;
             List<double[]> list = new List<double[]>();
             Stopwatch sw = new Stopwatch();
-            while (true)
+            for (int i = 0; i < Repetitions; i++)
             {
-                sw.Start();
-                var lastSolution = solver.GetSolution();
-                sw.Stop();
-                var lastSolutionScore = benchmark.RateSolution(lastSolution, data);
-                if ((bestSolutionScore == 0) || (bestSolutionScore > lastSolutionScore))
+                while (true)
                 {
-                    bestSolutionScore = lastSolutionScore;
-                    repetitionsWithoutProgress = 0;
-                }
-                else
-                {
-                    repetitionsWithoutProgress++;
-                }
-                var efficiency =(double) (ulong)optimalSolution.Score / bestSolutionScore;
-                var time = sw.Elapsed.TotalMilliseconds;
-                list.Add(new double[] { efficiency, time});
+                    sw.Start();
+                    var lastSolution = solver.GetSolution();
+                    sw.Stop();
+                    var lastSolutionScore = benchmark.RateSolution(lastSolution, data);
+                    if ((bestSolutionScore == 0) || (bestSolutionScore > lastSolutionScore))
+                    {
+                        bestSolutionScore = lastSolutionScore;
+                        repetitionsWithoutProgress = 0;
+                    }
+                    else
+                    {
+                        repetitionsWithoutProgress++;
+                    }
+                    var efficiency = (double)(ulong)optimalSolution.Score / bestSolutionScore;
+                    var time = sw.Elapsed.TotalMilliseconds;
+                    list.Add(new double[] { efficiency, time });
 
-                if (repetitionsWithoutProgress > MaxRepetitionsWithoutImprove) break;
-                if (efficiency > 0.99999999999999999999) break;
+                    if (repetitionsWithoutProgress > MaxRepetitionsWithoutImprove) break;
+                    if (efficiency > 0.99999999999999999999) break;
+                }
             }
-
             using (StreamWriter file = File.AppendText(outputFileName))
             {
                 foreach (double[] line in list)
