@@ -22,7 +22,7 @@ namespace AlgBattle.Utils
 
     public class TestExecutioner
     {
-        private static readonly IList<string> FileNames = new List<string> { "chr12a", "chr15a", "chr18a", "chr20a", "chr22a", "chr25a" };
+        private static readonly IList<string> FileNames = new List<string> { "tai12a", "tai15a", "tai18a", "tai20a", "tai22a", "tai25a" };
 
         private ulong GetMedian(List<ulong> numbers)
         {
@@ -54,6 +54,10 @@ namespace AlgBattle.Utils
                     return new QapGreedyLocalSolver(data);
                 case 3:
                     return new QapSteepestLocalSolver(data);
+                case 4:
+                    return new QapAnnealingSolver(data);
+                case 5:
+                    return new QapTabuSolver(data);
             }
             return null;
         }
@@ -73,22 +77,22 @@ namespace AlgBattle.Utils
             var outputNameCheckedElems = outputName + "_checked_elems_gs.csv";
 
             var bench = new QapSolutionBenchmark();
-            var outputScore = new ulong [fileNames.Count, 4];
-            var outputTime = new double [fileNames.Count, 4];
+            var outputScore = new ulong [fileNames.Count, 6];
+            var outputTime = new double [fileNames.Count, 6];
 
-            var outputMin = new ulong[fileNames.Count, 4];
-            var outputMax = new ulong[fileNames.Count, 4];
-            var outputMedian = new ulong[fileNames.Count, 4];
-            var outputStd = new int[fileNames.Count, 4];
-            var outputSimilarity = new double[fileNames.Count, 4];
+            var outputMin = new ulong[fileNames.Count, 6];
+            var outputMax = new ulong[fileNames.Count, 6];
+            var outputMedian = new ulong[fileNames.Count, 6];
+            var outputStd = new int[fileNames.Count, 6];
+            var outputSimilarity = new double[fileNames.Count, 6];
 
-            var outputSteps = new int[fileNames.Count, 2];
-            var outputCheckedElems = new int[fileNames.Count, 2];
+            var outputSteps = new int[fileNames.Count, 4];
+            var outputCheckedElems = new int[fileNames.Count, 4];
 
 
             for (int i = 0; i < fileNames.Count; ++i)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     outputMin[i, j] = UInt64.MaxValue;
                     outputMax[i, j] = 0;
@@ -107,7 +111,7 @@ namespace AlgBattle.Utils
                 ulong mediumRate = 0;
                 double mediumSim = 0;
 
-                for (int a = 0; a < 4; ++a)
+                for (int a = 0; a < 6; ++a)
                 {
                     var algorithm = GetAlgorithm(a, data);
                     Console.WriteLine("File: " + s + "Alg num: " + a);
@@ -131,7 +135,7 @@ namespace AlgBattle.Utils
                         }
                         tempList.Add(rate);
 
-                        if (a == 3 || a == 2) //GS
+                        if (a >= 2) //GS
                         {
                             outputCheckedElems[i, a - 2] = algorithm.CheckedElems;
                             outputSteps[i, a - 2] = algorithm.Steps;
@@ -153,7 +157,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameTime))
             {
-                for (int i = 0; i < 4; ++i)
+                for (int i = 0; i < 6; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -165,7 +169,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameScore))
             {
-                for (int i = 0; i < 4; ++i)
+                for (int i = 0; i < 6; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -177,7 +181,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameMin))
             {
-                for (int i = 0; i < 4; ++i)
+                for (int i = 0; i < 6; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -189,7 +193,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameMax))
             {
-                for (int i = 0; i < 4; ++i)
+                for (int i = 0; i < 6; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -201,7 +205,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameMedian))
             {
-                for (int i = 0; i < 4; ++i)
+                for (int i = 0; i < 6; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -213,7 +217,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameStd))
             {
-                for (int i = 0; i < 4; ++i)
+                for (int i = 0; i < 6; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -225,7 +229,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameSimilarity))
             {
-                for (int i = 0; i < 4; ++i)
+                for (int i = 0; i < 6; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -238,7 +242,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameCheckedElems))
             {
-                for (int i = 0; i < 2; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
@@ -250,7 +254,7 @@ namespace AlgBattle.Utils
 
             using (StreamWriter file = File.AppendText(outputNameSteps))
             {
-                for (int i = 0; i < 2; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     for (int j = 0; j < fileNames.Count; ++j)
                     {
