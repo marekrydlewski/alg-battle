@@ -26,12 +26,12 @@ namespace AlgBattle.Benchmarks
             QapSolutionBenchmark benchmark = new QapSolutionBenchmark();
             var data = qapDataReader.ReadData(@"../AlgBattle/Data/BaseData/" + InstanceName + ".dat");
             var optimalSolution = qapDataReader.ReadSolution(@"../AlgBattle/Data/BaseData/" + InstanceName + ".sln");
-            QapSteepestLocalSolver sSolver = new QapSteepestLocalSolver(data);
-            runSolver(sSolver, data, benchmark, optimalSolution, "firstVsLastsResult_steepest_" + outputFileName);
-            QapGreedyLocalSolver gSolver = new QapGreedyLocalSolver(data);
-            runSolver(gSolver, data, benchmark, optimalSolution, "firstVsLastsResult_greedy_" + outputFileName);
-            QapAnnealingSolver aSolver = new QapAnnealingSolver(data);
-            runSolver(aSolver, data, benchmark, optimalSolution, "firstVsLastsResult_annealing_" + outputFileName);
+            //QapSteepestLocalSolver sSolver = new QapSteepestLocalSolver(data);
+            //runSolver(sSolver, data, benchmark, optimalSolution, "firstVsLastsResult_steepest_" + outputFileName);
+            //QapGreedyLocalSolver gSolver = new QapGreedyLocalSolver(data);
+            //runSolver(gSolver, data, benchmark, optimalSolution, "firstVsLastsResult_greedy_" + outputFileName);
+            //QapAnnealingSolver aSolver = new QapAnnealingSolver(data);
+            //runSolver(aSolver, data, benchmark, optimalSolution, "firstVsLastsResult_annealing_" + outputFileName);
             QapTabuSolver tSolver = new QapTabuSolver(data);
             runSolver(tSolver, data, benchmark, optimalSolution, "firstVsLastsResult_tabu_" + outputFileName);
         }
@@ -44,9 +44,11 @@ namespace AlgBattle.Benchmarks
             {
 
                 var lastSolution = solver.GetSolution();
+                
                 //Console.WriteLine(validator.CheckLocalOptimum(lastSolution, data, false));
                 var firstSolution = solver.FirstSolution;
                 var lastSolutionScore = benchmark.RateSolution(lastSolution, data);
+                //Console.WriteLine("last : "+lastSolutionScore);
                 var firstSolutionScore = benchmark.RateSolution(firstSolution, data);
 
                 list.Add(new ulong[] { Convert.ToUInt64(optimalSolution.Score), firstSolutionScore, lastSolutionScore });

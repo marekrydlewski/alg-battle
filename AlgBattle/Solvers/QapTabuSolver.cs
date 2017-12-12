@@ -29,9 +29,9 @@ namespace AlgBattle.Solvers
             };
             FirstSolution = solution.Solution.ToArray();
             DeltaSolutionBenchmark benchmark = new DeltaSolutionBenchmark(Data, solution);
-
+            QapSolutionBenchmark solBen = new QapSolutionBenchmark();            
             var solutions = new SortedList<int, Tuple<int, int>>(new DuplicateKeyComparer<int>());
-            var currSolution = FirstSolution;
+            var currSolution = solution.Solution.ToArray();
             var bestScore = benchmark.ActualBestSolution.Score;
             var bestSolution = new List<int>();
             int changeCounter = 0;
@@ -94,8 +94,7 @@ namespace AlgBattle.Solvers
                     currSolution[y] = temp;
                 }
                 TickMemoryDown();
-            }
-
+            }            
             return bestSolution.ToArray();
         }
 

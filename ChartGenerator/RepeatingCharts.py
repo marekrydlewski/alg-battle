@@ -20,7 +20,7 @@ def convert_data(data):
     data_to_chart_best = []
     i = 0
     for x in data:
-        if i > 150:
+        if i > 200:
             break
         i += 1
         data_to_chart_x.append(i)
@@ -40,60 +40,61 @@ def create_chart(greedy_data, steepest_data, annealing_data, tabu_data, filename
     plt.scatter(g_data_x, g_data_b,
                 s=np.ones(len(g_data_x)) * 6,
                 c='red',
-                label='greedy najlepszy',
+                label='greedy best',
                 alpha=0.9,
-                marker="*",
+                marker="o",
                 edgecolors='none')
     plt.scatter(g_data_x, g_data_av,
                 s=np.ones(len(g_data_x)) * 6,
-                c='orange',
-                label='greedy średni',
+                c='red',
+                label='greedy average',
                 alpha=0.9,
                 marker="s",
                 edgecolors='none')
     plt.scatter(s_data_x, s_data_b,
                 s=np.ones(len(g_data_x)) * 6,
-                c='blue',
-                marker=".",
-                label='steepest najlepszy',
+                c='green',
+                marker="_",
+                label='steepest best',
                 alpha=0.9,
                 edgecolors='none')
     plt.scatter(s_data_x, s_data_av,
                 s=np.ones(len(g_data_x)) * 6,
                 c='green',
-                marker="o",
-                label='steepest średni',
+                marker="s",
+                label='steepest average',
                 alpha=0.9,
                 edgecolors='none')
     plt.scatter(a_data_x, a_data_b,
                 s=np.ones(len(g_data_x)) * 6,
-                c='brown',
-                marker="o",
-                label='annealing najlepszy',
+                c='gray',
+                marker="|",
+                label='annealing best',
                 alpha=0.9,
                 edgecolors='none')
     plt.scatter(a_data_x, a_data_av,
                 s=np.ones(len(g_data_x)) * 6,
                 c='gray',
-                marker="o",
-                label='annealing średni',
+                marker="s",
+                label='annealing average',
                 alpha=0.9,
                 edgecolors='none')
     plt.scatter(t_data_x, t_data_b,
                 s=np.ones(len(g_data_x)) * 6,
-                c='pink',
-                marker="o",
-                label='tabu najlepszy',
+                c='violet',
+                marker=".",
+                label='tabu best',
                 alpha=0.9,
                 edgecolors='none')
     plt.scatter(t_data_x, t_data_av,
                 s=np.ones(len(g_data_x)) * 6,
                 c='violet',
-                marker="o",
-                label='tabu średni',
+                marker="s",
+                label='tabu average',
                 alpha=0.9,
                 edgecolors='none')
-    ax.legend()
+    ax.legend(loc='center right',
+          fancybox=False, shadow=False, ncol=1, bbox_to_anchor=(1.12, 0.65), fontsize='small', labelspacing=0.12)
     ax.grid(True)
     # plt.savefig(filename + ".svg")
     plt.savefig(filename + ".png")

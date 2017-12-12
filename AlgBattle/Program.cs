@@ -83,7 +83,7 @@ namespace AlgBattle
             //Console.WriteLine(timerAll.Elapsed.Milliseconds);
             */
 
-            /*
+            
             //////////////optimal list
             /*IList<string> taiNames = new List<string> { "tai15b", "tai20b", "tai25b", "tai30b", "tai35b", "tai40b", "tai50b", "tai60b", "tai80b" };
             List<ulong> list = new List<ulong>();
@@ -101,7 +101,7 @@ namespace AlgBattle
                     file.WriteLine(line + ';');
                 }
             }*/
-
+            
             ////////// test first vs last result "tai15b", "tai20b", "tai25b", "tai30b", "tai35b",, "chr20b", "els19", "esc16a", "esc16j"
             IList<string> taiNames = new List<string> { "bur26f", "tai15b", "chr12b", "chr20a", "esc16j"};
             foreach (string name in taiNames){

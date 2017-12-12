@@ -17,7 +17,7 @@ def read_optimal_solutions():
 def convert_data(to_convert):
     result = []
     for i in range(0, len(to_convert)):
-        if int(to_convert[i])==0:
+        if int(to_convert[i]) == 0:
             result.append(0)
         else:
             result.append(int(optimal_values[i]) / int(to_convert[i]))
@@ -37,7 +37,10 @@ def read_results_std(filename):
     random = data[1]
     greedy = data[2]
     steepest = data[3]
-    return list(map(float,heuristic)), list(map(float,random)), list(map(float,greedy)), list(map(float,steepest))
+    annealing = data[4]
+    tabu = data[5]
+    return list(map(float, heuristic)), list(map(float, random)), list(map(float, greedy)), list(
+        map(float, steepest)), list(map(float, annealing)), list(map(float, tabu))
 
 
 def read_results_time(filename):
@@ -49,11 +52,14 @@ def read_results_time(filename):
         splitted_line = [x for x in splitted_line if x != ""]
         data.append(splitted_line)
 
-    heuristic = [float(x)/10 for x in data[0]]
-    random = [float(x)/10 for x in data[1]]
-    greedy = [float(x)/10 for x in data[2]]
-    steepest = [float(x)/10 for x in data[3]]
-    return heuristic, random, greedy, steepest
+    heuristic = [float(x) / 10 for x in data[0]]
+    random = [float(x) / 10 for x in data[1]]
+    greedy = [float(x) / 10 for x in data[2]]
+    steepest = [float(x) / 10 for x in data[3]]
+    annealing = [float(x) / 10 for x in data[4]]
+    tabu = [float(x) / 10 for x in data[5]]
+    return heuristic, random, greedy, steepest, annealing, tabu
+
 
 def read_results_steps(filename):
     data = []
@@ -66,7 +72,9 @@ def read_results_steps(filename):
 
     greedy = data[0]
     steepest = data[1]
-    return greedy, steepest
+    annealing = data[2]
+    tabu = data[3]
+    return greedy, steepest, annealing, tabu
 
 
 def read_results(filename):
@@ -82,10 +90,13 @@ def read_results(filename):
     random = data[1]
     greedy = data[2]
     steepest = data[3]
-    return convert_data(heuristic), convert_data(random), convert_data(greedy), convert_data(steepest)
+    annealing = data[4]
+    tabu = data[5]
+    return convert_data(heuristic), convert_data(random), convert_data(greedy), convert_data(steepest), convert_data(
+        annealing), convert_data(tabu)
 
 
-def create_chart_steps(greedy_data, steepest_data, filename, label):
+def create_chart_steps(greedy_data, steepest_data, annealing_data, tabu_data,  filename, label):
     fig, ax = plt.subplots()
     plt.ylabel(label)
     plt.xlabel('rozmiar instancji')
@@ -103,13 +114,27 @@ def create_chart_steps(greedy_data, steepest_data, filename, label):
                 label='steepest',
                 alpha=0.6,
                 edgecolors='green')
+    plt.scatter(instance_size, annealing_data,
+                s=np.ones(len(annealing_data)) * 40,
+                c='red',
+                marker="o",
+                label='annealing',
+                alpha=0.6,
+                edgecolors='red')
+    plt.scatter(instance_size, tabu_data,
+                s=np.ones(len(tabu_data)) * 40,
+                c='yellow',
+                marker="o",
+                label='tabu',
+                alpha=0.6,
+                edgecolors='yellow')
     ax.legend()
     ax.grid(True)
     plt.savefig(filename + ".png")
     plt.savefig(filename + ".pdf")
 
 
-def create_chart(heuristic_data, random_data, greedy_data, steepest_data, filename):
+def create_chart(heuristic_data, random_data, greedy_data, steepest_data, annealing_data, tabu_data, filename):
     # print(heuristic_data)
     fig, ax = plt.subplots()
     plt.ylabel('jakość')
@@ -142,13 +167,27 @@ def create_chart(heuristic_data, random_data, greedy_data, steepest_data, filena
                 label='steepest',
                 alpha=0.6,
                 edgecolors='green')
+    plt.scatter(instance_size, annealing_data,
+                s=np.ones(len(annealing_data)) * 20,
+                c='yellow',
+                marker="<",
+                label='annealing',
+                alpha=0.6,
+                edgecolors='yellow')
+    plt.scatter(instance_size, tabu_data,
+                s=np.ones(len(tabu_data)) * 20,
+                c='black',
+                marker=">",
+                label='tabu',
+                alpha=0.6,
+                edgecolors='black')
     ax.legend()
     ax.grid(True)
     plt.savefig(filename + ".png")
     plt.savefig(filename + ".pdf")
 
 
-def create_chart_time(heuristic_data, random_data, greedy_data, steepest_data, filename):
+def create_chart_time(heuristic_data, random_data, greedy_data, steepest_data, annealing_data, tabu_data, filename):
     # print(heuristic_data)
     fig, ax = plt.subplots()
     plt.ylabel('czas wykonania [ms]')
@@ -181,15 +220,29 @@ def create_chart_time(heuristic_data, random_data, greedy_data, steepest_data, f
                 label='steepest',
                 alpha=0.6,
                 edgecolors='green')
+    plt.scatter(instance_size, annealing_data,
+                s=np.ones(len(annealing_data)) * 20,
+                c='yellow',
+                marker="<",
+                label='annealing',
+                alpha=0.6,
+                edgecolors='yellow')
+    plt.scatter(instance_size, tabu_data,
+                s=np.ones(len(tabu_data)) * 20,
+                c='black',
+                marker=">",
+                label='tabu',
+                alpha=0.6,
+                edgecolors='black')
     ax.legend()
     ax.grid(True)
-    plt.yscale('log', nonposy='clip')
+    #plt.yscale('log', nonposy='clip')
     plt.savefig(filename + ".png")
     plt.savefig(filename + ".pdf")
 
 
 def create_chart_errorbar(heuristic_data, heuristic_std, random_data, random_std, greedy_data, greedy_std,
-                          steepest_data, steepest_std, filename):
+                          steepest_data, steepest_std, annealing_data, annealing_std, tabu_data, tabu_std,  filename):
     # print(heuristic_data)
     fig, ax = plt.subplots()
     plt.ylabel('jakość')
@@ -218,6 +271,18 @@ def create_chart_errorbar(heuristic_data, heuristic_std, random_data, random_std
                  label='steepest',
                  alpha=0.4,
                  capsize=5)
+    plt.errorbar(instance_size, annealing_data, annealing_std,
+                 c='yellow',
+                 marker="<",
+                 label='annealing',
+                 alpha=0.4,
+                 capsize=5)
+    plt.errorbar(instance_size, tabu_data, tabu_std,
+                 c='black',
+                 marker=">",
+                 label='tabu',
+                 alpha=0.4,
+                 capsize=5)
     ax.legend()
     ax.grid(True)
     plt.savefig(filename + ".png")
@@ -225,21 +290,22 @@ def create_chart_errorbar(heuristic_data, heuristic_std, random_data, random_std
 
 
 optimal_values = read_optimal_solutions()
-heuristic, random, greedy, steepest = read_results('../AlgBattle/taiOutput_score_min.csv')
-create_chart(heuristic, random, greedy, steepest, "best_quality")
-heuristic, random, greedy, steepest = read_results('../AlgBattle/taiOutput_score_max.csv')
-create_chart(heuristic, random, greedy, steepest, "worst_quality")
-heuristic, random, greedy, steepest = read_results('../AlgBattle/taiOutput_score_median.csv')
-create_chart(heuristic, random, greedy, steepest, "median_quality")
-heuristic, random, greedy, steepest = read_results('../AlgBattle/taiOutput_score.csv')
-heuristic_std, random_std, greedy_std, steepest_std = read_results_std('../AlgBattle/taiOutput_score_std.csv')
+heuristic, random, greedy, steepest, annealing, tabu = read_results('../AlgBattle/taiOutput_score_min.csv')
+create_chart(heuristic, random, greedy, steepest, annealing, tabu, "best_quality")
+heuristic, random, greedy, steepest, annealing, tabu = read_results('../AlgBattle/taiOutput_score_max.csv')
+create_chart(heuristic, random, greedy, steepest, annealing, tabu, "worst_quality")
+heuristic, random, greedy, steepest, annealing, tabu = read_results('../AlgBattle/taiOutput_score_median.csv')
+create_chart(heuristic, random, greedy, steepest, annealing, tabu, "median_quality")
+heuristic, random, greedy, steepest, annealing, tabu = read_results('../AlgBattle/taiOutput_score.csv')
+heuristic_std, random_std, greedy_std, steepest_std, annealing_std, tabu_std = read_results_std(
+    '../AlgBattle/taiOutput_score_std.csv')
 create_chart_errorbar(heuristic, heuristic_std, random, random_std, greedy, greedy_std, steepest, steepest_std,
-                      "average_quality")
-heuristic, random, greedy, steepest = read_results_time('../AlgBattle/taiOutput_time.csv')
-create_chart_time(heuristic, random, greedy, steepest, "time")
+                      annealing, annealing_std, tabu, tabu_std, "average_quality")
+heuristic, random, greedy, steepest, annealing, tabu = read_results_time('../AlgBattle/taiOutput_time.csv')
+create_chart_time(heuristic, random, greedy, steepest, annealing, tabu, "time")
 
-greedy, steepest = read_results_steps('../AlgBattle/taiOutput_steps_gs.csv')
-create_chart_steps(greedy, steepest, "steps", "liczba kroków")
+greedy, steepest, annealing, tabu = read_results_steps('../AlgBattle/taiOutput_steps_gs.csv')
+create_chart_steps(greedy, steepest, annealing, tabu, "steps", "liczba kroków")
 
-greedy, steepest = read_results_steps('../AlgBattle/taiOutput_checked_elems_gs.csv')
-create_chart_steps(greedy, steepest, "checked_elems", "liczba sprawdzonych elementów")
+greedy, steepest, annealing, tabu = read_results_steps('../AlgBattle/taiOutput_checked_elems_gs.csv')
+create_chart_steps(greedy, steepest, annealing, tabu, "checked_elems", "liczba sprawdzonych elementów")

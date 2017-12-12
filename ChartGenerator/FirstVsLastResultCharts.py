@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cbook as cbook
 
-files = ["bur26f"]#, "tai15b", "chr12b", "chr20a", "esc16j"]
+files = ["bur26f", "tai15b", "chr12b", "chr20a", "esc16j"]
 #files = ['../AlgBattle/steepest_firstVsLastsResult_chr12b.csv',
  #        '../AlgBattle/greedyfirstVsLastsResult_chr12b.csv']
 
