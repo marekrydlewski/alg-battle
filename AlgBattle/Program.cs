@@ -133,7 +133,7 @@ namespace AlgBattle
             //    }
             //}
 
-            IList<string> taiNames = new List<string> { "tai30b", "chr22b", "lipa50b" };
+            /*IList<string> taiNames = new List<string> { "tai30b", "chr22b", "lipa50b" };
             foreach (string name in taiNames)
             {
                 EfficiencyMeter test = new EfficiencyMeter();
@@ -141,7 +141,7 @@ namespace AlgBattle
                 test.InstanceName = name;
                 test.Repetitions = 10;
                 test.run();
-            }            
+            }     */       
         }
     }
 }
