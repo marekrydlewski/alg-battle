@@ -37,7 +37,7 @@ namespace AlgBattle.Solvers
             int changeCounter = 0;
             Steps = 0;
 
-            while(changeCounter < 10)
+            while(changeCounter < 20)
             {
                 Steps++;
                 changeCounter++;
@@ -48,6 +48,7 @@ namespace AlgBattle.Solvers
                     {
                         int neighborScore = benchmark.RateSolutionChange(i, j);
                         solutions.Add(neighborScore, Tuple.Create(i, j));
+                        CheckedElems++;
                     }
                 }
 

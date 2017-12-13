@@ -137,8 +137,8 @@ namespace AlgBattle.Utils
 
                         if (a >= 2) //GS
                         {
-                            outputCheckedElems[i, a - 2] = algorithm.CheckedElems;
-                            outputSteps[i, a - 2] = algorithm.Steps;
+                            outputCheckedElems[i, a - 2] += algorithm.CheckedElems;
+                            outputSteps[i, a - 2] += algorithm.Steps;
                         }
                     }
                     if (a >= 2)

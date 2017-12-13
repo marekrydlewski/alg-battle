@@ -31,8 +31,8 @@ namespace AlgBattle.Solvers
                     isLocalMinimum = true;
                 }
             }
-            CheckedElems = benchmark.SwapCounter * Data.Size * (Data.Size - 1);
-            Steps = benchmark.SwapCounter;
+            CheckedElems = Steps * Data.Size * (Data.Size - 1);
+            //Steps = benchmark.SwapCounter;
             return benchmark.ActualBestSolution.Solution.ToArray();
         }
 
@@ -60,6 +60,7 @@ namespace AlgBattle.Solvers
                     }
                 }
             }
+            Steps++;
             if (bestJ == -1 || bestI == -1)
             {
                 return false;
