@@ -15,7 +15,7 @@ namespace AlgBattle
         static void Main(string[] args)
         {
 
-            //test annealing 
+            /*//test annealing 
             Console.WriteLine("AlgBattle - algorithms comparison in QAP problem");
             var qapDataReader = new QapDataFileReader();
             var data = qapDataReader.ReadData(@"Data/BaseData/tai60a.dat");
@@ -68,16 +68,16 @@ namespace AlgBattle
             sw.Stop();
             Console.WriteLine($"Elapsed medium time: {sw.Elapsed }");
             Console.ReadLine();
-
+            */
             //instancje do analizy
             // chr25a - duze roznice random vs reszta, naiwne niezle
-            //IList<string> taiNames = new List<string> { "tai15b", "tai20b","tai25b", "tai30b", "tai35b", "tai40b", "tai50b", "tai60b", "tai80b", "tai150b" };
-            //var test = new TestExecutioner();
-            //var timerAll = new Stopwatch();
-            //timerAll.Start();
-            //test.RunTest(20, "taiOutput", taiNames);
-            //timerAll.Stop();
-            //Console.WriteLine(timerAll.Elapsed.Milliseconds);
+            IList<string> taiNames = new List<string> { "tai15b", "tai20b","tai25b", "tai30b", "tai35b", "tai40b", "tai50b", "tai60b", "tai80b", "tai150b" };
+            var test = new TestExecutioner();
+            var timerAll = new Stopwatch();
+            timerAll.Start();
+            test.RunTest(20, "taiOutput", taiNames);
+            timerAll.Stop();
+            Console.WriteLine(timerAll.Elapsed.Milliseconds);
 
             //IList<string> taiNames = new List<string> { "tai15b", "tai20b","tai25b", "tai30b", "tai35b", "tai40b","tai50b", "tai60b", "tai80b", /*"tai150b"*/ };
             //var test = new TestExecutioner();
@@ -133,7 +133,7 @@ namespace AlgBattle
             //    }
             //}
 
-            IList<string> taiNames = new List<string> { "tai30b", "chr22b", "lipa50b" };
+            /*IList<string> taiNames = new List<string> { "tai30b", "chr22b", "lipa50b" };
             foreach (string name in taiNames)
             {
                 EfficiencyMeter test = new EfficiencyMeter();
@@ -141,7 +141,7 @@ namespace AlgBattle
                 test.InstanceName = name;
                 test.Repetitions = 10;
                 test.run();
-            }            
+            }     */       
         }
     }
 }
