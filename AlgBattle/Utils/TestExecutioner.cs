@@ -141,7 +141,11 @@ namespace AlgBattle.Utils
                             outputSteps[i, a - 2] = algorithm.Steps;
                         }
                     }
-                    outputCheckedElems[i, a - 2] = outputCheckedElems[i, a - 2] / reps;
+                    if (a >= 2)
+                    {
+                        outputCheckedElems[i, a - 2] = (int)(outputCheckedElems[i, a - 2] / reps);
+                        outputSteps[i, a - 2] = (int)(outputSteps[i, a - 2] / reps);
+                    }
                     outputMedian[i, a] = this.GetMedian(tempList);
                     outputStd[i, a] = Convert.ToInt32(tempList.Select(x => Convert.ToInt32(x)).ToList().StandardDeviation());
                     mediumRate /= Convert.ToUInt64(reps);
